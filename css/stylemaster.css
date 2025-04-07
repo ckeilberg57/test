@@ -9,18 +9,32 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
-#headerMenu {
-  background-color: #0a2136;
+#pullDown {
+  display: none;
+}
+
+label[for="pullDown"] {
+  display: block;
+  background-color: #0eb3c7;
   color: white;
   padding: 10px;
-  text-align: center;
   cursor: pointer;
-  position: fixed;
-  top: 0;
-  width: 3in; /* Set width to 3 inches */
-  left: 50%;
-  transform: translateX(-50%); /* Center the element */
-  z-index: 999;
+  text-align: center;
+}
+
+#headerMenu {
+  background-color: #f0f0f0;
+  padding: 10px;
+  display: none;
+  border-bottom: 1px solid #ccc;
+}
+
+#pullDown:checked + label + #headerMenu {
+  display: block;
+}
+
+.select {
+  margin: 10px 0;
 }
 
 .form {
