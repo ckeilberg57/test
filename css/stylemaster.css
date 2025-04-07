@@ -10,11 +10,20 @@ body {
 }
 
 #headerMenu {
-  display: none;
+  background-color: #0a2136;
+  color: white;
   padding: 10px;
-  background-color: #f1f1f1;
-  border-bottom: 1px solid #ccc;
+  text-align: center;
+  cursor: pointer;
+  display: none;
+  position: fixed;
+  top: 0;
+  width: 3in; /* Set width to 3 inches */
+  left: 50%;
+  transform: translateX(-50%); /* Center the element */
+  z-index: 999;
 }
+
 .popup-form {
   position: fixed;
   top: 50%;
