@@ -15,59 +15,6 @@ body {
   padding: 10px;
   text-align: center;
   cursor: pointer;
-  display: none;
-  position: fixed;
-  top: 0;
-  width: 3in; /* Set width to 3 inches */
-  left: 50%;
-  transform: translateX(-50%); /* Center the element */
-  z-index: 999;
-}
-
-.popup-form {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border: 1px solid #ccc;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  width: 300px;
-  display: none;
-}
-.popup-form h2 {
-  margin-top: 0;
-  font-size: 18px;
-}
-.popup-form label {
-  display: block;
-  margin: 10px 0 5px;
-}
-.popup-form select {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-}
-.popup-form button {
-  width: 100%;
-  background-color: #0eb3c7;
-  color: white;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-#changePeripherals {
-  background-color: #0a2136;
-  color: white;
-  padding: 10px;
-  text-align: center;
-  cursor: pointer;
-  display: none;
   position: fixed;
   top: 0;
   width: 3in; /* Set width to 3 inches */
@@ -82,43 +29,6 @@ body {
   box-sizing: border-box;
   padding: 20px;
   width: 320px;
-}
-
-.title {
-  color: #eee;
-  font-family: sans-serif;
-  font-size: 36px;
-  font-weight: 600;
-  margin-top: 30px;
-  text-align: center;
-}
-
-.subtitle {
-  color: #eee;
-  font-family: sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  margin-top: 10px;
-  text-align: center;
-}
-
-.submit {
-  background-color: #08d;
-  border-radius: 12px;
-  border: 0;
-  box-sizing: border-box;
-  color: #eee;
-  cursor: pointer;
-  font-size: 18px;
-  height: 50px;
-  margin-top: 38px;
-  // outline: 0;
-  text-align: center;
-  width: 100%;
-}
-
-.submit:active {
-  background-color: #06b;
 }
 
 .green {
