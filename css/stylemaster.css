@@ -1,0 +1,197 @@
+body {
+  align-items: center;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  padding: 0px;
+  background: #fff;
+  font-family: "Montserrat", sans-serif;
+}
+
+#headerMenu {
+  display: none;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-bottom: 1px solid #ccc;
+}
+.popup-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 300px;
+  display: none;
+}
+.popup-form h2 {
+  margin-top: 0;
+  font-size: 18px;
+}
+.popup-form label {
+  display: block;
+  margin: 10px 0 5px;
+}
+.popup-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+.popup-form button {
+  width: 100%;
+  background-color: #0eb3c7;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#changePeripherals {
+  background-color: #0a2136;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  display: none;
+  position: fixed;
+  top: 0;
+  width: 3in; /* Set width to 3 inches */
+  left: 50%;
+  transform: translateX(-50%); /* Center the element */
+  z-index: 999;
+}
+
+.form {
+  background-color: #15172b;
+  border-radius: 20px;
+  box-sizing: border-box;
+  padding: 20px;
+  width: 320px;
+}
+
+.title {
+  color: #eee;
+  font-family: sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.subtitle {
+  color: #eee;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.submit {
+  background-color: #08d;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  cursor: pointer;
+  font-size: 18px;
+  height: 50px;
+  margin-top: 38px;
+  // outline: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.submit:active {
+  background-color: #06b;
+}
+
+.green {
+color:#198b16;
+}
+
+.red {
+color:#FF0000;
+}
+
+      .regForm {
+          position: absolute;  /* Allows precise positioning */
+          top: 2in;  /* Moves it 2 inches from the top */
+          left: 50%;  /* Centers horizontally */
+          transform: translateX(-50%);  /* Ensures proper centering */
+          text-align: center;  /* Centers inline elements */
+          width: max-content;  /* Adjusts to fit content */
+      }
+      
+      .clabel {
+          display: inline-block;
+          width: 170px;
+          text-align: left;
+          font-weight: bold;
+          padding-right: 5px;
+      }
+      
+      .cinput {
+          display: inline-block;
+      }
+
+        .ia {
+        display: inline-block;
+        float: left;
+        }
+
+
+      /* New for controls */
+      .controls {
+          border-top: 30px solid #fff;
+          display: none; /* Hide entire controls by default */
+      }
+
+      .controls ul {
+          list-style: none;
+          display: flex;
+          justify-content: center;
+          padding: 0;
+          margin: 0;
+          gap: 7.5px; /* Reduce spacing between buttons */
+      }
+      .controls li {
+          align-items: center;
+          display: inline-block;
+          width: 5%;
+      }
+      
+      /* Keep buttons hidden until needed */
+      .controls a {
+          width: 50%;
+          padding: 20px 15px;
+          font-size: 1.4em;
+          cursor: pointer;
+          background: #D6D6D6;
+          transition: background .3s, color .3s;
+          vertical-align: middle;
+      }
+      
+      .controls a:hover,
+      .controls a.active {
+          background: #0EBEC7;
+          color: #fff;
+      }
+
+.webrtcbutton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0eb3c7; /* Button background color */
+    border-radius: 50%; /* Makes it round */
+    color: #5244EE;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.3s;
+}
