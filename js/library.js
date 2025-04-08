@@ -133,6 +133,7 @@ function muteAudioStreams() {
   rtc.muteAudio(isAudioMuted);
 
   const muteAudioBtn = document.getElementById("id_muteaudio");
+  const icon = muteAudioBtn.querySelector("i");
   if (isAudioMuted) {
     muteAudioBtn.style.backgroundColor = "red";
     muteAudioBtn.style.color = "white";
