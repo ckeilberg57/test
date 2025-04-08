@@ -119,12 +119,12 @@ function muteVideoStreams() {
     icon.classList.remove("fa-video");
     icon.classList.add("fa-video-slash");
   } else {
-    muteVideoBtn.sytle.backgroundColor = "#D6D6D6";
+    muteVideoBtn.style.backgroundColor = "#D6D6D6";
     muteVideoBtn.style.color = "#5244EE";
     icon.classList.remove("fa-video-slash");
     icon.classList.add("fa-video");
   }
-  console.log('Video is now ${isVideoMuted ? "muted" : "unmuted"}.');
+  console.log(`Video is now ${isVideoMuted ? "muted" : "unmuted"}.`);
 }
 
 let isAudioMuted = false;
@@ -136,11 +136,15 @@ function muteAudioStreams() {
   if (isAudioMuted) {
     muteAudioBtn.style.backgroundColor = "red";
     muteAudioBtn.style.color = "white";
+    icon.classList.remove("fa-audio");
+    icon.classList.add("fa-audio-slash");
   } else {
-    muteAudioBtn.sytle.backgroundColor = "#D6D6D6";
+    muteAudioBtn.style.backgroundColor = "#D6D6D6";
     muteAudioBtn.style.color = "#5244EE";
+    icon.classList.remove("fa-audio-slash");
+    icon.classList.add("fa-audio");
   }
-  console.log('Audio is now ${isAudioMuted ? "muted" : "unmuted"}.');
+  console.log(`Audio is now ${isAudioMuted ? "muted" : "unmuted"}.`);
 }
 
 var reg = {
