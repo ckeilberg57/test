@@ -112,7 +112,7 @@ function muteVideoStreams() {
   rtc.muteVideo(isVideoMuted);
 
   const muteVideoBtn = document.getElementById("id_mutevideo");
-  const icon = muteBtn.querySelector("i");
+  const icon = muteVideoBtn.querySelector("i");
   if (isVideoMuted) {
     muteVideoBtn.style.backgroundColor = "red";
     muteVideoBtn.style.color = "white";
