@@ -115,9 +115,22 @@ function muteVideoStreams() {
 
 let isAudioMuted = false;
 function muteAudioStreams() {
-  console.log("User wants to mute the audio.");
   isAudioMuted = !isAudioMuted;
   rtc.muteAudio(isAudioMuted);
+
+  const muteBtn = document.getElementById("muteButton");
+  if (isVideoMuted) {
+    muteBtn.style.backgroundColor = "red";
+    muteBtn.sytly.color = "white";
+    muteBtn.textContent = "Unmute";
+  } else {
+    muteBtn.sytle.backgroundColor = "#D6D6D6";
+    muteBtn.style.color = "#5244EE";
+    muteBtn.textContent = "Mute";
+  }
+  
+  console.log("User wants to mute the audio.");
+
 }
 
 var reg = {
