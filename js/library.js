@@ -136,13 +136,13 @@ function muteAudioStreams() {
   if (isAudioMuted) {
     muteAudioBtn.style.backgroundColor = "red";
     muteAudioBtn.style.color = "white";
-    icon.classList.remove("fa-audio");
-    icon.classList.add("fa-audio-slash");
+    icon.classList.remove("fa-microphone");
+    icon.classList.add("fa-microphone-slash");
   } else {
     muteAudioBtn.style.backgroundColor = "#D6D6D6";
     muteAudioBtn.style.color = "#5244EE";
-    icon.classList.remove("fa-audio-slash");
-    icon.classList.add("fa-audio");
+    icon.classList.remove("fa-microphone-slash");
+    icon.classList.add("fa-microphone");
   }
   console.log(`Audio is now ${isAudioMuted ? "muted" : "unmuted"}.`);
 }
