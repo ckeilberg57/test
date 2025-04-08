@@ -130,7 +130,7 @@ function muteAudioStreams() {
   rtc.muteAudio(isAudioMuted);
 
   const muteAudioBtn = document.getElementById("muteAudio");
-  if (isVideoMuted) {
+  if (isAudioMuted) {
     muteAudioBtn.style.backgroundColor = "red";
     muteAudioBtn.sytly.color = "white";
     muteAudioBtn.textContent = "Unmute";
