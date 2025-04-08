@@ -115,11 +115,9 @@ function muteVideoStreams() {
   if (isVideoMuted) {
     muteVideoBtn.style.backgroundColor = "red";
     muteVideoBtn.style.color = "white";
-    muteVideoBtn.textContent = "Unmute";
   } else {
     muteVideoBtn.sytle.backgroundColor = "#D6D6D6";
     muteVideoBtn.style.color = "#5244EE";
-    muteVideoBtn.textContent = "Mute";
   }
   console.log('Video is now ${isVideoMuted ? "muted" : "unmuted"}.');
 }
@@ -133,11 +131,9 @@ function muteAudioStreams() {
   if (isAudioMuted) {
     muteAudioBtn.style.backgroundColor = "red";
     muteAudioBtn.style.color = "white";
-    muteAudioBtn.textContent = "Unmute";
   } else {
     muteAudioBtn.sytle.backgroundColor = "#D6D6D6";
     muteAudioBtn.style.color = "#5244EE";
-    muteAudioBtn.textContent = "Mute";
   }
   console.log('Audio is now ${isAudioMuted ? "muted" : "unmuted"}.');
 }
