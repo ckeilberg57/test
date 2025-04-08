@@ -108,9 +108,20 @@ function endCall() {
 
 let isVideoMuted = false;
 function muteVideoStreams() {
-  console.log("User wants to mute the video.");
   isVideoMuted = !isVideoMuted;
   rtc.muteVideo(isVideoMuted);
+
+  const muteVideoBtn = document.getElementById("muteVideo");
+  if (isVideoMuted) {
+    muteVideoBtn.style.backgroundColor = "red";
+    muteVideoBtn.sytly.color = "white";
+    muteVideoBtn.textContent = "Unmute";
+  } else {
+    muteVideoBtn.sytle.backgroundColor = "#D6D6D6";
+    muteVideoBtn.style.color = "#5244EE";
+    muteVideoBtn.textContent = "Mute";
+  }
+  console.log("User wants to mute the video.");
 }
 
 let isAudioMuted = false;
@@ -118,19 +129,17 @@ function muteAudioStreams() {
   isAudioMuted = !isAudioMuted;
   rtc.muteAudio(isAudioMuted);
 
-  const muteBtn = document.getElementById("muteButton");
+  const muteAudioBtn = document.getElementById("muteAudio");
   if (isVideoMuted) {
-    muteBtn.style.backgroundColor = "red";
-    muteBtn.sytly.color = "white";
-    muteBtn.textContent = "Unmute";
+    muteAudioBtn.style.backgroundColor = "red";
+    muteAudioBtn.sytly.color = "white";
+    muteAudioBtn.textContent = "Unmute";
   } else {
-    muteBtn.sytle.backgroundColor = "#D6D6D6";
-    muteBtn.style.color = "#5244EE";
-    muteBtn.textContent = "Mute";
+    muteAudioBtn.sytle.backgroundColor = "#D6D6D6";
+    muteAudioBtn.style.color = "#5244EE";
+    muteAudioBtn.textContent = "Mute";
   }
-  
   console.log("User wants to mute the audio.");
-
 }
 
 var reg = {
