@@ -111,7 +111,7 @@ function muteVideoStreams() {
   isVideoMuted = !isVideoMuted;
   rtc.muteVideo(isVideoMuted);
 
-  const muteVideoBtn = document.getElementById("muteVideo");
+  const muteVideoBtn = document.getElementById("id_mutevideo");
   if (isVideoMuted) {
     muteVideoBtn.style.backgroundColor = "red";
     muteVideoBtn.sytly.color = "white";
@@ -121,7 +121,7 @@ function muteVideoStreams() {
     muteVideoBtn.style.color = "#5244EE";
     muteVideoBtn.textContent = "Mute";
   }
-  console.log("User wants to mute the video.");
+  console.log('Video is now ${isVideoMuted ? "muted" : "unmuted"}.');
 }
 
 let isAudioMuted = false;
@@ -129,7 +129,7 @@ function muteAudioStreams() {
   isAudioMuted = !isAudioMuted;
   rtc.muteAudio(isAudioMuted);
 
-  const muteAudioBtn = document.getElementById("muteAudio");
+  const muteAudioBtn = document.getElementById("id_muteaudio");
   if (isAudioMuted) {
     muteAudioBtn.style.backgroundColor = "red";
     muteAudioBtn.sytly.color = "white";
@@ -139,7 +139,7 @@ function muteAudioStreams() {
     muteAudioBtn.style.color = "#5244EE";
     muteAudioBtn.textContent = "Mute";
   }
-  console.log("User wants to mute the audio.");
+  console.log('Audio is now ${isAudioMuted ? "muted" : "unmuted"}.');
 }
 
 var reg = {
