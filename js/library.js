@@ -2,10 +2,7 @@ var video;
 var bandwidth;
 var conference;
 var pin;
-var flash;
-var flash_button = null;
 var rtc = null;
-var id_selfview;
 
 /* ~~~ SETUP AND TEARDOWN ~~~ */
 
@@ -96,56 +93,6 @@ function initialise(
 //} catch (error) {
   //console.log(error);
 //}
-
-function checkForBlockedPopup() {
-    id_presentation.classList.remove("inactive");
-    if (!presentation || typeof presentation.innerHeight === "undefined" || (presentation.innerHeight === 0 && presentation.innerWidth === 0)) {
-        // Popups blocked
-        presentationClosed();
-        flash_button = setInterval(function(){id_presentation.classList.toggle('active');}, 1000);
-    } else {
-        id_presentation.textContent = trans['BUTTON_HIDEPRES'];
-        presentation.document.title = decodeURIComponent(conference) + " presentation from " + presenter;
-        if (flash_button) {
-            clearInterval(flash_button);
-            flash_button = null;
-            id_presentation.classList.remove('active');
-        }
-        if (presentation.document.getElementById('presvideo')) {
-            rtc.getPresentation();
-        } else {
-            loadPresentation(presentationURL);
-        }
-    }
-}
-
-function toggleSelfview() {
-    if (!id_selfview.classList.contains("inactive")) {
-        if (flash) {
-            //flash.toggleSelfview();
-            if (id_selfview.classList.contains('selected')) {
-                flash.hideSelfview();
-                id_selfview.classList.remove('selected');
-                id_selfview.textContent = trans['BUTTON_SHOWSELF'];
-            } else {
-                flash.showSelfview();
-                id_selfview.classList.add('selected');
-                id_selfview.textContent = trans['BUTTON_HIDESELF'];
-            }
-        } else {
-            selfview.hidden = !selfview.hidden;
-            if (selfview.hidden) {
-                id_selfview.textContent = trans['BUTTON_SHOWSELF'];
-                id_selfview.classList.remove('selected');
-                rosterlist.classList.remove('shorter');
-            } else {
-                id_selfview.textContent = trans['BUTTON_HIDESELF'];
-                id_selfview.classList.add('selected');
-                rosterlist.classList.add('shorter');
-            }
-        }
-    }
-}
 
 function endCall() {
   console.log("User wants to end the call.");
