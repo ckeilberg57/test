@@ -114,7 +114,7 @@ function muteVideoStreams() {
   const muteVideoBtn = document.getElementById("id_mutevideo");
   if (isVideoMuted) {
     muteVideoBtn.style.backgroundColor = "red";
-    muteVideoBtn.sytly.color = "white";
+    muteVideoBtn.style.color = "white";
     muteVideoBtn.textContent = "Unmute";
   } else {
     muteVideoBtn.sytle.backgroundColor = "#D6D6D6";
@@ -132,7 +132,7 @@ function muteAudioStreams() {
   const muteAudioBtn = document.getElementById("id_muteaudio");
   if (isAudioMuted) {
     muteAudioBtn.style.backgroundColor = "red";
-    muteAudioBtn.sytly.color = "white";
+    muteAudioBtn.style.color = "white";
     muteAudioBtn.textContent = "Unmute";
   } else {
     muteAudioBtn.sytle.backgroundColor = "#D6D6D6";
