@@ -5,6 +5,7 @@ var pin;
 var flash;
 var flash_button = null;
 var rtc = null;
+var id_selfview;
 
 /* ~~~ SETUP AND TEARDOWN ~~~ */
 
