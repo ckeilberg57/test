@@ -404,3 +404,37 @@ var remote_alias_autocomplete = new autoComplete({
     suggest(suggestions);
   },
 });
+
+function start() {
+  const selfViewElement = document.getElementById("video");
+
+  if (selfViewElement.srcObject) {
+    selfViewElement.srcObject.getTracks().forEach(track => {
+      console.debug("Stopping existing track:", track);
+      track.stop();
+    });
+  }
+
+  const audioSource = audioInputSelect.value;
+  const videoSource = videoSelect.value;
+
+  const constraints = {
+    audio: { deviceId: audioSource ? { exact: audioSource } : undefined },
+    video: { deviceId: videoSource ? { exact: videoSource } : undefined }
+  };
+
+  navigator.mediaDevices.getUserMedia(constraints)
+    .then((stream) => {
+      console.debug("Updating stream with new devices:", stream);
+      selfViewElement.srcObject = stream;
+      PEX.pexrtc.user_media_stream = stream;
+      PEX.pexrtc.renegotiate(false);
+
+      // ✅ Automatically close the device selector
+      document.getElementById("pullDown").checked = false;
+    })
+    .catch((error) => {
+      console.error("Error switching media devices: ", error);
+    });
+}
+
