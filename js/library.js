@@ -112,12 +112,17 @@ function muteVideoStreams() {
   rtc.muteVideo(isVideoMuted);
 
   const muteVideoBtn = document.getElementById("id_mutevideo");
+  const icon = muteBtn.querySelector("i");
   if (isVideoMuted) {
     muteVideoBtn.style.backgroundColor = "red";
     muteVideoBtn.style.color = "white";
+    icon.classList.remove("fa-video");
+    icon.classList.add("fa-video-slash");
   } else {
     muteVideoBtn.sytle.backgroundColor = "#D6D6D6";
     muteVideoBtn.style.color = "#5244EE";
+    icon.classList.remove("fa-video-slash");
+    icon.classList.add("fa-video");
   }
   console.log('Video is now ${isVideoMuted ? "muted" : "unmuted"}.');
 }
