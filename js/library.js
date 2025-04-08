@@ -2,7 +2,8 @@ var video;
 var bandwidth;
 var conference;
 var pin;
-
+var flash;
+var flash_button = null;
 var rtc = null;
 
 /* ~~~ SETUP AND TEARDOWN ~~~ */
@@ -94,6 +95,28 @@ function initialise(
 //} catch (error) {
   //console.log(error);
 //}
+
+function checkForBlockedPopup() {
+    id_presentation.classList.remove("inactive");
+    if (!presentation || typeof presentation.innerHeight === "undefined" || (presentation.innerHeight === 0 && presentation.innerWidth === 0)) {
+        // Popups blocked
+        presentationClosed();
+        flash_button = setInterval(function(){id_presentation.classList.toggle('active');}, 1000);
+    } else {
+        id_presentation.textContent = trans['BUTTON_HIDEPRES'];
+        presentation.document.title = decodeURIComponent(conference) + " presentation from " + presenter;
+        if (flash_button) {
+            clearInterval(flash_button);
+            flash_button = null;
+            id_presentation.classList.remove('active');
+        }
+        if (presentation.document.getElementById('presvideo')) {
+            rtc.getPresentation();
+        } else {
+            loadPresentation(presentationURL);
+        }
+    }
+}
 
 function toggleSelfview() {
     if (!id_selfview.classList.contains("inactive")) {
