@@ -117,7 +117,7 @@ let isAudioMuted = false;
 function muteAudioStreams() {
   console.log("User wants to mute the audio.");
   isAudioMuted = !isAudioMuted;
-  rtc.muteAudio(true);
+  rtc.muteAudio(isAudioMuted);
 }
 
 var reg = {
