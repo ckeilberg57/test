@@ -95,6 +95,33 @@ function initialise(
   //console.log(error);
 //}
 
+function toggleSelfview() {
+    if (!id_selfview.classList.contains("inactive")) {
+        if (flash) {
+            //flash.toggleSelfview();
+            if (id_selfview.classList.contains('selected')) {
+                flash.hideSelfview();
+                id_selfview.classList.remove('selected');
+                id_selfview.textContent = trans['BUTTON_SHOWSELF'];
+            } else {
+                flash.showSelfview();
+                id_selfview.classList.add('selected');
+                id_selfview.textContent = trans['BUTTON_HIDESELF'];
+            }
+        } else {
+            selfview.hidden = !selfview.hidden;
+            if (selfview.hidden) {
+                id_selfview.textContent = trans['BUTTON_SHOWSELF'];
+                id_selfview.classList.remove('selected');
+                rosterlist.classList.remove('shorter');
+            } else {
+                id_selfview.textContent = trans['BUTTON_HIDESELF'];
+                id_selfview.classList.add('selected');
+                rosterlist.classList.add('shorter');
+            }
+        }
+    }
+}
 
 function endCall() {
   console.log("User wants to end the call.");
