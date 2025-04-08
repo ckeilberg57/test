@@ -106,6 +106,16 @@ function endCall() {
   document.getElementById("controls").style.display = "none"; // Hide the footer
 }
 
+function muteVideoStreams() {
+  console.log("User wants to mute the video.");
+  rtc.muteVideo(true);
+}
+
+function muteAudioStreams() {
+  console.log("User wants to mute the audio.");
+  rtc.muteAudio(true);
+}
+
 var reg = {
   token: null,
   event_source: null,
