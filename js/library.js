@@ -376,31 +376,31 @@ var reg = {
   },
 };
 
-var remote_alias_autocomplete = new autoComplete({
-  selector: "#remotealias",
-  minChars: 1,
-  source: function (term, suggest) {
-    term = term.toLowerCase();
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open(
-      "GET",
-      "https://" + user.node + "/api/client/v2/registrations?q=" + term,
-      false
-    );
-    if (user.token) {
-      xmlhttp.setRequestHeader("token", user.token);
-    }
-    var suggestions = [];
-    try {
-      xmlhttp.send();
-      console.log("responseText " + xmlhttp.responseText);
-      result = JSON.parse(xmlhttp.responseText)["result"];
-      for (var i = 0; i < result.length; i++) {
-        suggestions.push(result[i]["alias"]);
-      }
-    } catch (exception) {
-      console.log("Exception during get_request");
-    }
-    suggest(suggestions);
-  },
-});
+//var remote_alias_autocomplete = new autoComplete({
+  //selector: "#remotealias",
+  //minChars: 1,
+  //source: function (term, suggest) {
+    //term = term.toLowerCase();
+    //var xmlhttp = new XMLHttpRequest();
+    //xmlhttp.open(
+      //"GET",
+      //"https://" + user.node + "/api/client/v2/registrations?q=" + term,
+      //false
+    //);
+    //if (user.token) {
+      //xmlhttp.setRequestHeader("token", user.token);
+    //}
+    //var suggestions = [];
+    //try {
+      //xmlhttp.send();
+      //console.log("responseText " + xmlhttp.responseText);
+      //result = JSON.parse(xmlhttp.responseText)["result"];
+      //for (var i = 0; i < result.length; i++) {
+        //suggestions.push(result[i]["alias"]);
+      //}
+    //} catch (exception) {
+      //console.log("Exception during get_request");
+    //}
+    //suggest(suggestions);
+  //},
+//});
