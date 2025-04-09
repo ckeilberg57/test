@@ -177,14 +177,13 @@ function start() {
     video: {deviceId: videoSource ? {exact: videoSource} : undefined}
   };
   navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
+
+  if (rtc) {
+    rtc.audio_source = audioInputSelect.value;
+    rtc.video_source = videoSelect.value;
+    rtc.renegotiate(false);
+  }
 }
-
-audioInputSelect.onchange = start;
-audioOutputSelect.onchange = changeAudioDestination;
-
-videoSelect.onchange = start;
-
-start();
 
 </script>
 
