@@ -86,14 +86,6 @@ function initialise(
   rtc.makeCall(node, conference, name, bandwidth);
 }
 
-//try {
-  //const stream = navigator.mediaDevices.getUserMedia({
-    //video: { pan: true, tilt: true, zoom: true },
-  //});
-//} catch (error) {
-  //console.log(error);
-//}
-
 function endCall() {
   console.log("User wants to end the call.");
   rtc.disconnect();
@@ -158,8 +150,6 @@ var reg = {
     this.alias = alias;
     if (this.request_token()) {
       if (this.start_events()) {
-        // Registered
-        // Toggle register/unregister button
         var regunreg = document.getElementById("register");
         regunreg.value = "Unregister";
         regunreg.className = "red";
@@ -291,7 +281,6 @@ var reg = {
   incoming_cancelled: function (event) {
     incoming_data = JSON.parse(event.data);
     console.log("incoming cancelled");
-    // TODO better dialog support, so we can close when call is cancelled
   },
 
   release_incoming_token: function (token, conference) {
@@ -375,32 +364,3 @@ var reg = {
     }
   },
 };
-
-//var remote_alias_autocomplete = new autoComplete({
-  //selector: "#remotealias",
-  //minChars: 1,
-  //source: function (term, suggest) {
-    //term = term.toLowerCase();
-    //var xmlhttp = new XMLHttpRequest();
-    //xmlhttp.open(
-      //"GET",
-      //"https://" + user.node + "/api/client/v2/registrations?q=" + term,
-      //false
-    //);
-    //if (user.token) {
-      //xmlhttp.setRequestHeader("token", user.token);
-    //}
-    //var suggestions = [];
-    //try {
-      //xmlhttp.send();
-      //console.log("responseText " + xmlhttp.responseText);
-      //result = JSON.parse(xmlhttp.responseText)["result"];
-      //for (var i = 0; i < result.length; i++) {
-        //suggestions.push(result[i]["alias"]);
-      //}
-    //} catch (exception) {
-      //console.log("Exception during get_request");
-    //}
-    //suggest(suggestions);
-  //},
-//});
