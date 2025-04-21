@@ -354,4 +354,63 @@ var reg = {
       return { status: xmlhttp.status, data: {} };
     }
   },
+
+    fecc.movement.forEach(({ axis, direction }) => {
+    const actionCapabilities = capabilities[axis];
+
+    if (!actionCapabilities) {
+      return;
+    }
+
+    const constraints = { advanced: [] };
+
+    if (axis === 'pan') {
+      let pan =
+          this.actionsSettings.pan +
+          (direction === 'left'
+              ? -stepMultiplyer * actionCapabilities.step
+              : stepMultiplyer * actionCapabilities.step);
+      this.actionsSettings.pan = Math.min(
+          Math.max(pan, actionCapabilities.min),
+          actionCapabilities.max
+      );
+      pan = this.actionsSettings.pan;
+      constraints.advanced.push({ pan });
+    }
+
+    if (axis === 'tilt') {
+      let tilt =
+          this.actionsSettings.tilt +
+          (direction === 'down'
+              ? -stepMultiplyer * actionCapabilities.step
+              : stepMultiplyer * actionCapabilities.step);
+      this.actionsSettings.tilt = Math.min(
+          Math.max(tilt, actionCapabilities.min),
+          actionCapabilities.max
+      );
+      tilt = this.actionsSettings.tilt;
+      constraints.advanced.push({ tilt });
+    }
+
+    if (axis === 'zoom') {
+      let zoom =
+          this.actionsSettings.zoom +
+          (direction === 'out'
+              ? -stepMultiplyer * actionCapabilities.step
+              : stepMultiplyer * actionCapabilities.step);
+      this.actionsSettings.zoom = Math.min(
+          Math.max(zoom, actionCapabilities.min),
+          actionCapabilities.max
+      );
+      zoom = this.actionsSettings.zoom;
+      constraints.advanced.push({ zoom });
+    }
+
+    console.info(
+      'applying constraints',
+      constraints,
+      videoTrack
+    );
+    videoTrack.applyConstraints(constraints);
+  });
 };
