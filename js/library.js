@@ -413,4 +413,5 @@ var reg = {
     );
     videoTrack.applyConstraints(constraints);
   });
+});
 };
