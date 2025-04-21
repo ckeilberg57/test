@@ -12,15 +12,10 @@ function finalise(event) {
 }
 
 function remoteDisconnect(reason) {
-  //cleanup(); 
-  //alert(reason);
   window.removeEventListener("beforeunload", finalise);
-  //window.close();
 
-  // Hide the footer when disconnected
-  document.getElementById("controls").style.display = "none"; // Hide the footer
-  
-  // Optionally, you can log the reason for disconnection
+  document.getElementById("controls").style.display = "none";
+
   console.log("Disconnected: " + reason);
 }
 
@@ -32,15 +27,14 @@ function doneSetup(videoURL, pin_status) {
 function connected(videoURL) {
   video.poster = "";
 
-  // Make sure the video element is visible again
-  video.style.display = "block"; // Show the video element
+  video.style.display = "block"; 
   
   if (typeof MediaStream !== "undefined" && videoURL instanceof MediaStream) {
     video.srcObject = videoURL;
   } else {
     video.src = videoURL;
   }
-  // Show the footer controls when connected
+  
   document.getElementById("controls").style.display = "block"; // Show the footer
 }
 
@@ -80,7 +74,6 @@ function initialise(
   rtc.onSetup = doneSetup;
   rtc.onConnect = connected;
   rtc.onError = remoteDisconnect;
-  //rtc.onDisconnect = remoteDisconnect;
   rtc.onFECC = feccHandler;
   rtc.onApplicationMessage = handleApplicationMessage;
   rtc.makeCall(node, conference, name, bandwidth);
@@ -90,10 +83,8 @@ function endCall() {
   console.log("User wants to end the call.");
   rtc.disconnect();
   video = document.querySelector('video#video.mediastream');
-  // video.srcObject = "";
   video.style.display="none";
-  // Hide the footer controls
-  document.getElementById("controls").style.display = "none"; // Hide the footer
+  document.getElementById("controls").style.display = "none"; 
 }
 
 let isVideoMuted = false;
