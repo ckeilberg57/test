@@ -355,6 +355,26 @@ var reg = {
     }
   },
 
+  function onFecc(fecc) {
+  console.info('FECC action', fecc);
+  const stepMultiplyer = fecc.action === 'start' ? 1 : 2;
+
+  if (fecc.action === 'stop') {
+    return;
+  }
+
+  const [videoTrack] = stream.getVideoTracks();
+  const capabilities = videoTrack.getCapabilities();
+
+  if (!this.actionsSettings) {
+    const settings = videoTrack.getSettings();
+    this.actionsSettings = {
+        pan: settings['pan'],
+        tilt: settings['tilt'],
+        zoom: settings['zoom']
+    };
+  }
+
     fecc.movement.forEach(({ axis, direction }) => {
     const actionCapabilities = capabilities[axis];
 
@@ -413,5 +433,4 @@ var reg = {
     );
     videoTrack.applyConstraints(constraints);
   });
-});
 };
