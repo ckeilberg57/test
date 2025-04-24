@@ -144,8 +144,12 @@ function onFecc(fecc) {
     }
 
     if (axis === 'zoom') {
+      const zoomMultiplier = 5; // tweak this as needed
+    
       if (fecc.action === 'start') {
-        let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
+        let zoom = this.actionsSettings.zoom + 
+          (direction === 'out' ? -zoomDelta * zoomMultiplier : zoomDelta * zoomMultiplier);
+    
         zoom = Math.min(Math.max(zoom, cap.min), cap.max);
         this.actionsSettings.zoom = zoom;
         console.log(`Zoom updated to: ${zoom}`);
