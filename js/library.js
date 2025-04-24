@@ -100,11 +100,6 @@ const panTiltZoomPermissionStatus = navigator.permissions.query({ name: "camera"
 
 function onFecc(fecc) {
   console.info('FECC action', fecc);
-
-  // Initialize shared state if needed
-  this.actionsSettings = this.actionsSettings || {};
-  this.zoomInterval = this.zoomInterval || null;
-  this.zoomDirection = this.zoomDirection || null;
   if (fecc.action === 'stop') return;
 
   const [videoTrack] = stream.getVideoTracks();
