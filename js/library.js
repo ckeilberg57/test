@@ -118,74 +118,65 @@ function onFecc(fecc) {
     };
   }
 
-fecc.movement.forEach(({ axis, direction }) => {
-  // Make sure initial values are set
-  this.actionsSettings.pan ??= 0;
-  this.actionsSettings.tilt ??= 0;
-  this.actionsSettings.zoom ??= 1;
+  fecc.movement.forEach(({ axis, direction }) => {
+    const actionCapabilities = capabilities[axis];
 
-  const actionCapabilities = capabilities[axis];
-  console.log('Axis:', axis);
-  console.log('Direction:', direction);
-  console.log('Capabilities for axis:', actionCapabilities);
+    if (!actionCapabilities) {
+      return;
+    }
 
-  if (!actionCapabilities) {
-    console.warn(`No capabilities found for axis: ${axis}`);
-    return;
-  }
+    const constraints = { advanced: [] };
 
-  const constraints = { advanced: [] };
+    if (axis === 'pan') {
+      let pan =
+          this.actionsSettings.pan +
+          (direction === 'left'
+              ? -stepMultiplyer * actionCapabilities.step
+              : stepMultiplyer * actionCapabilities.step);
+      this.actionsSettings.pan = Math.min(
+          Math.max(pan, actionCapabilities.min),
+          actionCapabilities.max
+      );
+      pan = this.actionsSettings.pan;
+      constraints.advanced.push({ pan });
+    }
 
-  if (axis === 'pan') {
-    let pan =
-      this.actionsSettings.pan +
-      (direction === 'left'
-        ? -stepMultiplyer * actionCapabilities.step
-        : stepMultiplyer * actionCapabilities.step);
+    if (axis === 'tilt') {
+      let tilt =
+          this.actionsSettings.tilt +
+          (direction === 'down'
+              ? -stepMultiplyer * actionCapabilities.step
+              : stepMultiplyer * actionCapabilities.step);
+      this.actionsSettings.tilt = Math.min(
+          Math.max(tilt, actionCapabilities.min),
+          actionCapabilities.max
+      );
+      tilt = this.actionsSettings.tilt;
+      constraints.advanced.push({ tilt });
+    }
 
-    pan = Math.min(Math.max(pan, actionCapabilities.min), actionCapabilities.max);
-    this.actionsSettings.pan = pan;
+    if (axis === 'zoom') {
+      let zoom =
+          this.actionsSettings.zoom +
+          (direction === 'out'
+              ? -stepMultiplyer * actionCapabilities.step
+              : stepMultiplyer * actionCapabilities.step);
+      this.actionsSettings.zoom = Math.min(
+          Math.max(zoom, actionCapabilities.min),
+          actionCapabilities.max
+      );
+      zoom = this.actionsSettings.zoom;
+      constraints.advanced.push({ zoom });
+    }
 
-    console.log('Computed pan value:', pan);
-    constraints.advanced.push({ pan });
-  }
-
-  if (axis === 'tilt') {
-    let tilt =
-      this.actionsSettings.tilt +
-      (direction === 'down'
-        ? -stepMultiplyer * actionCapabilities.step
-        : stepMultiplyer * actionCapabilities.step);
-
-    tilt = Math.min(Math.max(tilt, actionCapabilities.min), actionCapabilities.max);
-    this.actionsSettings.tilt = tilt;
-
-    console.log('Computed tilt value:', tilt);
-    constraints.advanced.push({ tilt });
-  }
-
-  if (axis === 'zoom') {
-    let zoom =
-      this.actionsSettings.zoom +
-      (direction === 'out'
-        ? -stepMultiplyer * actionCapabilities.step
-        : stepMultiplyer * actionCapabilities.step);
-
-    zoom = Math.min(Math.max(zoom, actionCapabilities.min), actionCapabilities.max);
-    this.actionsSettings.zoom = zoom;
-
-    console.log('Computed zoom value:', zoom);
-    constraints.advanced.push({ zoom });
-  }
-
-  console.info('Applying constraints:', constraints, 'to videoTrack:', videoTrack);
-
-  try {
+    console.info(
+      'applying constraints',
+      constraints,
+      videoTrack
+    );
     videoTrack.applyConstraints(constraints);
-  } catch (err) {
-    console.error('Failed to apply constraints:', err);
-  }
-});
+  });
+}
 
 let isVideoMuted = false;
 function muteVideoStreams() {
