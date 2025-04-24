@@ -149,47 +149,21 @@ function onFecc(fecc) {
     }
 
     if (axis === 'zoom') {
-      const cap = capabilities.zoom;
-      if (!cap || cap.step <= 0) {
-        console.warn("Zoom not supported or invalid step.");
-        return;
-      }
-    
       if (fecc.action === 'start') {
-        // Store direction for interval logic
-        this.zoomDirection = direction;
-    
-        // Clear any existing interval
-        if (this.zoomInterval) clearInterval(this.zoomInterval);
-    
-        const zoomFn = () => {
-          let zoom = this.actionsSettings.zoom +
-              (this.zoomDirection === 'out'
-                  ? -stepMultiplyer * cap.step
-                  : stepMultiplyer * cap.step);
-    
-          zoom = Math.min(Math.max(zoom, cap.min), cap.max);
-          this.actionsSettings.zoom = zoom;
-    
-          const constraints = { advanced: [{ zoom }] };
-          console.info('Applying zoom constraint:', constraints);
-          videoTrack.applyConstraints(constraints);
-        };
-    
-        // Run it once and then on interval
-        zoomFn();
-        this.zoomInterval = setInterval(zoomFn, 150); // adjust delay as needed
-    
-      } else if (fecc.action === 'stop') {
-        clearInterval(this.zoomInterval);
-        this.zoomInterval = null;
-        console.info("Zoom stopped");
+        let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
+        zoom = Math.min(Math.max(zoom, cap.min), cap.max);
+        this.actionsSettings.zoom = zoom;
+        console.log(`Zoom updated to: ${zoom}`);
+        constraints.advanced.push({ zoom });
       }
-    
-      // Don’t apply constraint here outside the zoom block
-      return;
     }
-  }
+
+    console.info('Applying constraints:', constraints);
+    videoTrack.applyConstraints(constraints).catch(err => {
+      console.error(`Failed to apply ${axis} constraints:`, err);
+    });
+  });
+}
 
 let isVideoMuted = false;
 function muteVideoStreams() {
