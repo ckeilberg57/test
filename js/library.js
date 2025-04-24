@@ -143,45 +143,27 @@ function onFecc(fecc) {
       constraints.advanced.push({ tilt });
     }
 
-if (axis === 'zoom') {
-  const cap = capabilities.zoom;
-  if (!cap || cap.step <= 0) {
-    console.warn("Zoom not supported or invalid step.");
-    return;
-  }
+    if (axis === 'zoom') {
+      let zoom =
+          this.actionsSettings.zoom +
+          (direction === 'out'
+              ? -stepMultiplyer * actionCapabilities.step
+              : stepMultiplyer * actionCapabilities.step);
+      this.actionsSettings.zoom = Math.min(
+          Math.max(zoom, actionCapabilities.min),
+          actionCapabilities.max
+      );
+      zoom = this.actionsSettings.zoom;
+      constraints.advanced.push({ zoom });
+    }
 
-  if (!this.zoomInterval) {
-    this.zoomInterval = null;
-  }
-
-  if (fecc.action === 'start') {
-    this.zoomDirection = direction;
-
-    const zoomFn = () => {
-      let currentZoom = this.actionsSettings.zoom ?? cap.min ?? 100;
-      const delta = direction === 'out' ? -cap.step : cap.step;
-      let zoom = currentZoom + delta;
-
-      zoom = Math.min(Math.max(zoom, cap.min), cap.max);
-
-      // Prevent reapplying same value
-      if (zoom !== currentZoom) {
-        this.actionsSettings.zoom = zoom;
-        const constraints = { advanced: [{ zoom }] };
-        videoTrack.applyConstraints(constraints);
-        console.log(`Zoom updated to ${zoom}`);
-      }
-    };
-
-    // Run immediately, then start interval
-    zoomFn();
-    this.zoomInterval = setInterval(zoomFn, 200);
-
-  } else if (fecc.action === 'stop') {
-    clearInterval(this.zoomInterval);
-    this.zoomInterval = null;
-    console.log("Zoom stopped");
-  }
+    console.info(
+      'applying constraints',
+      constraints,
+      videoTrack
+    );
+    videoTrack.applyConstraints(constraints);
+  });
 }
 
 let isVideoMuted = false;
