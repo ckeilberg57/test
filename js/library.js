@@ -189,6 +189,7 @@ function onFecc(fecc) {
       // Don’t apply constraint here outside the zoom block
       return;
     }
+  }
 
 let isVideoMuted = false;
 function muteVideoStreams() {
