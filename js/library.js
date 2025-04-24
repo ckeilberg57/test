@@ -145,8 +145,8 @@ function onFecc(fecc) {
 
     if (axis === 'zoom') {
       const zoomMultiplier = 1; // Zoom by 1 step for single press
-      const zoomIntervalMs = 100; // How fast zoom happens during hold
-      const zoomHoldDelay = 300; // Delay before zoom starts on hold
+      const zoomIntervalMs = 100; // How fast zoom happens during hold (in ms)
+      const zoomHoldDelay = 300; // Delay before zoom starts on hold (in ms)
     
       if (fecc.action === 'start') {
         // Store the zoom direction for later
@@ -156,19 +156,19 @@ function onFecc(fecc) {
         if (this.zoomTimeout) clearTimeout(this.zoomTimeout);
         if (this.zoomInterval) clearInterval(this.zoomInterval);
     
-        // Zoom once when pressed (by 1 step)
+        // Apply the zoom once (single press behavior)
         let zoom = this.actionsSettings.zoom + 
           (this.zoomDirection === 'out' ? -zoomDelta * zoomMultiplier : zoomDelta * zoomMultiplier);
         zoom = Math.min(Math.max(zoom, cap.min), cap.max);
         this.actionsSettings.zoom = zoom;
     
         const constraints = { advanced: [{ zoom }] };
-        console.info('Applying zoom constraint (one step):', constraints);
+        console.info('Applying zoom constraint (single press):', constraints);
         videoTrack.applyConstraints(constraints).catch(err => {
           console.error(`Failed to apply zoom constraint:`, err);
         });
     
-        // Start continuous zooming after a small delay (on hold)
+        // Start continuous zoom after a delay when button is held
         this.zoomTimeout = setTimeout(() => {
           this.zoomInterval = setInterval(() => {
             let zoom = this.actionsSettings.zoom + 
@@ -182,10 +182,10 @@ function onFecc(fecc) {
               console.error(`Failed to apply zoom constraint:`, err);
             });
           }, zoomIntervalMs);
-        }, zoomHoldDelay);
+        }, zoomHoldDelay); // Only start continuous zoom after this delay
     
       } else if (fecc.action === 'stop') {
-        // Stop the continuous zoom interval when button is released
+        // Stop continuous zooming when the button is released
         clearTimeout(this.zoomTimeout);
         clearInterval(this.zoomInterval);
         this.zoomInterval = null;
@@ -195,6 +195,7 @@ function onFecc(fecc) {
     
       return;
     }
+
 
 
 
