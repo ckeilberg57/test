@@ -144,12 +144,21 @@ function onFecc(fecc) {
     }
 
     if (axis === 'zoom') {
-      if (fecc.action === 'start') {
-        let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
+      if (cap && fecc.action === 'start') {
+        let currentZoom = this.actionsSettings.zoom ?? settings.zoom ?? cap.min ?? 100;
+        console.log(`Current zoom: ${currentZoom}`);
+    
+        let zoom = currentZoom + (direction === 'out' ? -zoomDelta : zoomDelta);
         zoom = Math.min(Math.max(zoom, cap.min), cap.max);
-        this.actionsSettings.zoom = zoom;
-        console.log(`Zoom updated to: ${zoom}`);
-        constraints.advanced.push({ zoom });
+    
+        // Prevent applying the same value again
+        if (zoom !== currentZoom) {
+          this.actionsSettings.zoom = zoom;
+          console.log(`Zoom set to: ${zoom}`);
+          constraints.advanced.push({ zoom });
+        } else {
+          console.log('Zoom already at boundary, no change.');
+        }
       }
     }
 
