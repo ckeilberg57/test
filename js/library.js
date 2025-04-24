@@ -144,40 +144,58 @@ function onFecc(fecc) {
     }
 
     if (axis === 'zoom') {
-      const zoomMultiplier = 5; // controls how much it zooms each interval
-      const zoomIntervalMs = 100; // interval time in ms
+      const zoomMultiplier = 5; // how much to zoom
+      const zoomIntervalMs = 100; // interval speed
+      const zoomHoldDelay = 300; // delay before starting continuous zoom
     
       if (fecc.action === 'start') {
-        // Store direction
         this.zoomDirection = direction;
     
-        // Clear any existing interval
+        // Clear any previous actions
+        if (this.zoomTimeout) clearTimeout(this.zoomTimeout);
         if (this.zoomInterval) clearInterval(this.zoomInterval);
     
-        // Start new interval
-        this.zoomInterval = setInterval(() => {
-          let zoom = this.actionsSettings.zoom +
-            (this.zoomDirection === 'out' ? -zoomDelta * zoomMultiplier : zoomDelta * zoomMultiplier);
+        // Zoom once immediately
+        let zoom = this.actionsSettings.zoom +
+          (this.zoomDirection === 'out' ? -zoomDelta * zoomMultiplier : zoomDelta * zoomMultiplier);
     
-          zoom = Math.min(Math.max(zoom, cap.min), cap.max);
-          this.actionsSettings.zoom = zoom;
+        zoom = Math.min(Math.max(zoom, cap.min), cap.max);
+        this.actionsSettings.zoom = zoom;
     
-          const constraints = { advanced: [{ zoom }] };
-          console.info('Applying zoom constraint:', constraints);
-          videoTrack.applyConstraints(constraints).catch(err => {
-            console.error(`Failed to apply zoom constraint:`, err);
-          });
-        }, zoomIntervalMs);
+        const constraints = { advanced: [{ zoom }] };
+        console.info('Applying zoom constraint (initial):', constraints);
+        videoTrack.applyConstraints(constraints).catch(err => {
+          console.error(`Failed to apply zoom constraint:`, err);
+        });
+    
+        // Then after delay, start interval if still held
+        this.zoomTimeout = setTimeout(() => {
+          this.zoomInterval = setInterval(() => {
+            let zoom = this.actionsSettings.zoom +
+              (this.zoomDirection === 'out' ? -zoomDelta * zoomMultiplier : zoomDelta * zoomMultiplier);
+    
+            zoom = Math.min(Math.max(zoom, cap.min), cap.max);
+            this.actionsSettings.zoom = zoom;
+    
+            const constraints = { advanced: [{ zoom }] };
+            console.info('Applying zoom constraint (interval):', constraints);
+            videoTrack.applyConstraints(constraints).catch(err => {
+              console.error(`Failed to apply zoom constraint:`, err);
+            });
+          }, zoomIntervalMs);
+        }, zoomHoldDelay);
     
       } else if (fecc.action === 'stop') {
-        // Stop zoom interval
+        clearTimeout(this.zoomTimeout);
         clearInterval(this.zoomInterval);
         this.zoomInterval = null;
+        this.zoomTimeout = null;
         console.info("Zoom stopped");
       }
     
-      return; // Prevent zoom from hitting the applyConstraints block below
+      return;
     }
+
 
     console.info('Applying constraints:', constraints);
     videoTrack.applyConstraints(constraints).catch(err => {
