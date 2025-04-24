@@ -149,10 +149,10 @@ function onFecc(fecc) {
       const zoomHoldDelay = 300; // Delay before zoom starts on hold (in ms)
     
       if (fecc.action === 'start') {
-        // Store the zoom direction for later
+        // Store the zoom direction for later (zoom in or out)
         this.zoomDirection = direction;
     
-        // Clear any existing actions (prevents overlap)
+        // Clear any existing actions to prevent overlap
         if (this.zoomTimeout) clearTimeout(this.zoomTimeout);
         if (this.zoomInterval) clearInterval(this.zoomInterval);
     
@@ -168,8 +168,9 @@ function onFecc(fecc) {
           console.error(`Failed to apply zoom constraint:`, err);
         });
     
-        // Start continuous zoom after a delay when button is held
+        // Start continuous zoom only after a delay when the button is held
         this.zoomTimeout = setTimeout(() => {
+          // Start the interval only after the delay
           this.zoomInterval = setInterval(() => {
             let zoom = this.actionsSettings.zoom + 
               (this.zoomDirection === 'out' ? -zoomDelta : zoomDelta);
@@ -186,8 +187,8 @@ function onFecc(fecc) {
     
       } else if (fecc.action === 'stop') {
         // Stop continuous zooming when the button is released
-        clearTimeout(this.zoomTimeout);
-        clearInterval(this.zoomInterval);
+        clearTimeout(this.zoomTimeout); // Clear the timeout
+        clearInterval(this.zoomInterval); // Stop the interval
         this.zoomInterval = null;
         this.zoomTimeout = null;
         console.info("Zoom stopped");
@@ -195,9 +196,6 @@ function onFecc(fecc) {
     
       return;
     }
-
-
-
 
     console.info('Applying constraints:', constraints);
     videoTrack.applyConstraints(constraints).catch(err => {
