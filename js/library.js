@@ -144,36 +144,35 @@ function onFecc(fecc) {
     }
 
     if (axis === 'zoom') {
-      const zoomMultiplier = 5; // how much to zoom
-      const zoomIntervalMs = 100; // interval speed
-      const zoomHoldDelay = 300; // delay before starting continuous zoom
+      const zoomMultiplier = 1; // Zoom by 1 step for single press
+      const zoomIntervalMs = 100; // How fast zoom happens during hold
+      const zoomHoldDelay = 300; // Delay before zoom starts on hold
     
       if (fecc.action === 'start') {
+        // Store the zoom direction for later
         this.zoomDirection = direction;
     
-        // Clear any previous actions
+        // Clear any existing actions (prevents overlap)
         if (this.zoomTimeout) clearTimeout(this.zoomTimeout);
         if (this.zoomInterval) clearInterval(this.zoomInterval);
     
-        // Zoom once immediately
-        let zoom = this.actionsSettings.zoom +
+        // Zoom once when pressed (by 1 step)
+        let zoom = this.actionsSettings.zoom + 
           (this.zoomDirection === 'out' ? -zoomDelta * zoomMultiplier : zoomDelta * zoomMultiplier);
-    
         zoom = Math.min(Math.max(zoom, cap.min), cap.max);
         this.actionsSettings.zoom = zoom;
     
         const constraints = { advanced: [{ zoom }] };
-        console.info('Applying zoom constraint (initial):', constraints);
+        console.info('Applying zoom constraint (one step):', constraints);
         videoTrack.applyConstraints(constraints).catch(err => {
           console.error(`Failed to apply zoom constraint:`, err);
         });
     
-        // Then after delay, start interval if still held
+        // Start continuous zooming after a small delay (on hold)
         this.zoomTimeout = setTimeout(() => {
           this.zoomInterval = setInterval(() => {
-            let zoom = this.actionsSettings.zoom +
-              (this.zoomDirection === 'out' ? -zoomDelta * zoomMultiplier : zoomDelta * zoomMultiplier);
-    
+            let zoom = this.actionsSettings.zoom + 
+              (this.zoomDirection === 'out' ? -zoomDelta : zoomDelta);
             zoom = Math.min(Math.max(zoom, cap.min), cap.max);
             this.actionsSettings.zoom = zoom;
     
@@ -186,6 +185,7 @@ function onFecc(fecc) {
         }, zoomHoldDelay);
     
       } else if (fecc.action === 'stop') {
+        // Stop the continuous zoom interval when button is released
         clearTimeout(this.zoomTimeout);
         clearInterval(this.zoomInterval);
         this.zoomInterval = null;
@@ -195,6 +195,7 @@ function onFecc(fecc) {
     
       return;
     }
+
 
 
     console.info('Applying constraints:', constraints);
