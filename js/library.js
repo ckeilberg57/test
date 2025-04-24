@@ -145,20 +145,34 @@ function onFecc(fecc) {
 
     if (axis === 'zoom') {
       if (fecc.action === 'start') {
-        let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
-        zoom = Math.min(Math.max(zoom, cap.min), cap.max);
-        this.actionsSettings.zoom = zoom;
-        console.log(`Zoom updated to: ${zoom}`);
-        constraints.advanced.push({ zoom });
+        // Clear any previous interval
+        if (this.zoomInterval) clearInterval(this.zoomInterval);
+    
+        this.zoomDirection = direction;
+    
+        this.zoomInterval = setInterval(() => {
+          let zoom = this.actionsSettings.zoom + 
+            (this.zoomDirection === 'out' ? -zoomDelta : zoomDelta);
+          zoom = Math.min(Math.max(zoom, cap.min), cap.max);
+          this.actionsSettings.zoom = zoom;
+    
+          const zoomConstraints = { advanced: [{ zoom }] };
+          console.info('Applying zoom constraint:', zoomConstraints);
+    
+          videoTrack.applyConstraints(zoomConstraints).catch(err => {
+            console.error('Zoom constraint failed:', err);
+          });
+        }, 150); // Repeat every 150ms (adjust for speed)
+    
+      } else if (fecc.action === 'stop') {
+        clearInterval(this.zoomInterval);
+        this.zoomInterval = null;
+        console.info('Zoom stopped');
       }
+    
+      // Don’t apply zoom constraints below — it's handled above in interval
+      return;
     }
-
-    console.info('Applying constraints:', constraints);
-    videoTrack.applyConstraints(constraints).catch(err => {
-      console.error(`Failed to apply ${axis} constraints:`, err);
-    });
-  });
-}
 
 let isVideoMuted = false;
 function muteVideoStreams() {
