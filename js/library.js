@@ -111,18 +111,17 @@ function onFecc(fecc) {
   console.log('Tilt capabilities:', capabilities.tilt);
   console.log('Zoom capabilities:', capabilities.zoom);
 
-  // Setup initial settings if not already set
   if (!this.actionsSettings) {
     this.actionsSettings = {
       pan: settings.pan || 0,
       tilt: settings.tilt || 0,
-      zoom: settings.zoom || 100
+      zoom: settings.zoom || capabilities.zoom.min || 100
     };
   }
 
-  // Use smaller delta for pan/tilt
-  const panTiltDelta = 500000; // Try reducing to 250000 if still too fast
-  const zoomDelta = capabilities.zoom?.step || 1;
+  // 🔧 Reduce pan/tilt step for finer control
+  const panTiltDelta = 150000;
+  const zoomDelta = capabilities.zoom?.step || 10;
 
   fecc.movement.forEach(({ axis, direction }) => {
     const cap = capabilities[axis];
@@ -145,11 +144,11 @@ function onFecc(fecc) {
     }
 
     if (axis === 'zoom') {
-      // Only zoom on 'start'
       if (fecc.action === 'start') {
         let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
         zoom = Math.min(Math.max(zoom, cap.min), cap.max);
         this.actionsSettings.zoom = zoom;
+        console.log(`Zoom updated to: ${zoom}`);
         constraints.advanced.push({ zoom });
       }
     }
@@ -160,6 +159,7 @@ function onFecc(fecc) {
     });
   });
 }
+
 
 let isVideoMuted = false;
 function muteVideoStreams() {
