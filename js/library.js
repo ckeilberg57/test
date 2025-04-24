@@ -100,65 +100,64 @@ const panTiltZoomPermissionStatus = navigator.permissions.query({ name: "camera"
 
 function onFecc(fecc) {
   console.info('FECC action', fecc);
-  const stepMultiplyer = fecc.action === 'start' ? 1 : 2;
-
-  if (fecc.action === 'stop') {
-    return;
-  }
+  if (fecc.action === 'stop') return;
 
   const [videoTrack] = stream.getVideoTracks();
   const capabilities = videoTrack.getCapabilities();
+  const settings = videoTrack.getSettings();
 
-  // 🔍 Logs for capabilities debugging
   console.log('Camera capabilities:', capabilities);
   console.log('Pan capabilities:', capabilities.pan);
   console.log('Tilt capabilities:', capabilities.tilt);
   console.log('Zoom capabilities:', capabilities.zoom);
 
+  // Setup initial settings if not already set
   if (!this.actionsSettings) {
-    const settings = videoTrack.getSettings();
     this.actionsSettings = {
-      pan: settings['pan'],
-      tilt: settings['tilt'],
-      zoom: settings['zoom']
+      pan: settings.pan || 0,
+      tilt: settings.tilt || 0,
+      zoom: settings.zoom || 100
     };
   }
 
+  // Use smaller delta for pan/tilt
+  const panTiltDelta = 500000; // Try reducing to 250000 if still too fast
+  const zoomDelta = capabilities.zoom?.step || 1;
+
   fecc.movement.forEach(({ axis, direction }) => {
-    const actionCapabilities = capabilities[axis];
-    if (!actionCapabilities) return;
+    const cap = capabilities[axis];
+    if (!cap) return;
 
     const constraints = { advanced: [] };
-    
-    // Use fixed deltas since step is 0
-    const delta = 500000; // Adjust this value based on how far you want the camera to move
 
     if (axis === 'pan') {
-      let pan = this.actionsSettings.pan + (direction === 'left' ? -delta : delta);
-      pan = Math.min(Math.max(pan, actionCapabilities.min), actionCapabilities.max);
+      let pan = this.actionsSettings.pan + (direction === 'left' ? -panTiltDelta : panTiltDelta);
+      pan = Math.min(Math.max(pan, cap.min), cap.max);
       this.actionsSettings.pan = pan;
       constraints.advanced.push({ pan });
     }
 
     if (axis === 'tilt') {
-      let tilt = this.actionsSettings.tilt + (direction === 'down' ? -delta : delta);
-      tilt = Math.min(Math.max(tilt, actionCapabilities.min), actionCapabilities.max);
+      let tilt = this.actionsSettings.tilt + (direction === 'down' ? -panTiltDelta : panTiltDelta);
+      tilt = Math.min(Math.max(tilt, cap.min), cap.max);
       this.actionsSettings.tilt = tilt;
       constraints.advanced.push({ tilt });
     }
 
     if (axis === 'zoom') {
-      let zoom = this.actionsSettings.zoom +
-        (direction === 'out'
-          ? -stepMultiplyer * actionCapabilities.step
-          : stepMultiplyer * actionCapabilities.step);
-      zoom = Math.min(Math.max(zoom, actionCapabilities.min), actionCapabilities.max);
-      this.actionsSettings.zoom = zoom;
-      constraints.advanced.push({ zoom });
+      // Only zoom on 'start'
+      if (fecc.action === 'start') {
+        let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
+        zoom = Math.min(Math.max(zoom, cap.min), cap.max);
+        this.actionsSettings.zoom = zoom;
+        constraints.advanced.push({ zoom });
+      }
     }
 
-    console.info('Applying constraints', constraints, videoTrack);
-    videoTrack.applyConstraints(constraints);
+    console.info('Applying constraints:', constraints);
+    videoTrack.applyConstraints(constraints).catch(err => {
+      console.error(`Failed to apply ${axis} constraints:`, err);
+    });
   });
 }
 
