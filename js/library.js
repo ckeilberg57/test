@@ -109,6 +109,12 @@ function onFecc(fecc) {
   const [videoTrack] = stream.getVideoTracks();
   const capabilities = videoTrack.getCapabilities();
 
+  // 🔍 Logs for capabilities debugging
+  console.log('Camera capabilities:', capabilities);
+  console.log('Pan capabilities:', capabilities.pan);
+  console.log('Tilt capabilities:', capabilities.tilt);
+  console.log('Zoom capabilities:', capabilities.zoom);
+
   if (!this.actionsSettings) {
     const settings = videoTrack.getSettings();
     this.actionsSettings = {
