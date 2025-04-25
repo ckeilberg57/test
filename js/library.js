@@ -143,23 +143,34 @@ function onFecc(fecc) {
       constraints.advanced.push({ tilt });
     }
 
-    // Add this outside your loop or class to persist across function calls
-    let lastZoomTime = 0;
-    const zoomCooldown = 200; // ms
+    let zoomInterval = null;
+    const zoomStepInterval = 100; // milliseconds between zoom steps
+
     
-    // Inside your function:
-    const now = Date.now();
     if (axis === 'zoom') {
-      if (fecc.action === 'start' && now - lastZoomTime > zoomCooldown) {
-        lastZoomTime = now;
-        
-        let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
-        zoom = Math.min(Math.max(zoom, cap.min), cap.max);
-        this.actionsSettings.zoom = zoom;
-        console.log(`Zoom updated to: ${zoom}`);
-        constraints.advanced.push({ zoom });
+      if (fecc.action === 'start') {
+        if (!zoomInterval) {
+          zoomInterval = setInterval(() => {
+            let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
+            zoom = Math.min(Math.max(zoom, cap.min), cap.max);
+            this.actionsSettings.zoom = zoom;
+            const constraints = { advanced: [{ zoom }] };
+            console.log(`Zoom updated to: ${zoom}`);
+            videoTrack.applyConstraints(constraints).catch(err => {
+              console.error(`Failed to apply zoom constraints:`, err);
+            });
+          }, zoomStepInterval);
+        }
+      }
+    
+      if (fecc.action === 'stop') {
+        if (zoomInterval) {
+          clearInterval(zoomInterval);
+          zoomInterval = null;
+        }
       }
     }
+
 
     console.info('Applying constraints:', constraints);
     videoTrack.applyConstraints(constraints).catch(err => {
