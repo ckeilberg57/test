@@ -145,7 +145,8 @@ function onFecc(fecc) {
 
     let zoomInterval = null;
     const zoomStepInterval = 100; // milliseconds between zoom steps
-
+    const zoomDelta = (capabilities.zoom?.step || 10) * 2; // doubled zoom step
+    
     if (axis === 'zoom') {
       if (fecc.action === 'start') {
         let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
@@ -155,7 +156,7 @@ function onFecc(fecc) {
         constraints.advanced.push({ zoom });
       }
     }
-
+    
     console.info('Applying constraints:', constraints);
     videoTrack.applyConstraints(constraints).catch(err => {
       console.error(`Failed to apply ${axis} constraints:`, err);
