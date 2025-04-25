@@ -146,7 +146,7 @@ function onFecc(fecc) {
     if (axis === 'zoom') {
       if (fecc.action === 'start') {
         // Double the zoomDelta if needed
-        let adjustedZoomDelta = zoomDelta * 2; // Doubling the zoom step
+        let adjustedZoomDelta = zoomDelta * 10;
         let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
         zoom = Math.min(Math.max(zoom, cap.min), cap.max);
         this.actionsSettings.zoom = zoom;
