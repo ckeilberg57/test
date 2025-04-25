@@ -121,7 +121,7 @@ function onFecc(fecc) {
 
   // 🔧 Reduce pan/tilt step for finer control
   const panTiltDelta = 150000;
-  const zoomDelta = capabilities.zoom?.step || 10;
+  const zoomDelta = capabilities.zoom?.step || 10 * 5;
 
   fecc.movement.forEach(({ axis, direction }) => {
     const cap = capabilities[axis];
@@ -145,8 +145,6 @@ function onFecc(fecc) {
 
     if (axis === 'zoom') {
       if (fecc.action === 'start') {
-        // Double the zoomDelta if needed
-        let adjustedZoomDelta = zoomDelta * 10;
         let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
         zoom = Math.min(Math.max(zoom, cap.min), cap.max);
         this.actionsSettings.zoom = zoom;
