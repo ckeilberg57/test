@@ -143,15 +143,12 @@ function onFecc(fecc) {
       constraints.advanced.push({ tilt });
     }
 
-    let zoomInterval = null;
-    const zoomStepInterval = 100; // milliseconds between zoom steps
-
     if (axis === 'zoom') {
       if (fecc.action === 'start') {
         let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
         zoom = Math.min(Math.max(zoom, cap.min), cap.max);
         this.actionsSettings.zoom = zoom;
-        console.log(Zoom updated to: ${zoom});
+        console.log(`Zoom updated to: ${zoom}`);
         constraints.advanced.push({ zoom });
       }
     }
