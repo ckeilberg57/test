@@ -115,13 +115,13 @@ function onFecc(fecc) {
     this.actionsSettings = {
       pan: settings.pan || 0,
       tilt: settings.tilt || 0,
-      zoom: settings.zoom || capabilities.zoom.min || 100
+      zoom: settings.zoom || 0
     };
   }
 
   // 🔧 Reduce pan/tilt step for finer control
   const panTiltDelta = 150000;
-  const zoomDelta = capabilities.zoom?.step || 10 * 5;
+  const zoomDelta = 10
 
   fecc.movement.forEach(({ axis, direction }) => {
     const cap = capabilities[axis];
@@ -144,13 +144,10 @@ function onFecc(fecc) {
     }
 
     if (axis === 'zoom') {
-      if (fecc.action === 'start') {
-        let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
-        zoom = Math.min(Math.max(zoom, cap.min), cap.max);
-        this.actionsSettings.zoom = zoom;
-        console.log(`Zoom updated to: ${zoom}`);
-        constraints.advanced.push({ zoom });
-      }
+      let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
+      zoom = Math.min(Math.max(zoom, cap.min), cap.max);
+      this.actionsSettings.zoom = zoom;
+      constraints.advanced.push({ zoom });
     }
     
     console.info('Applying constraints:', constraints);
