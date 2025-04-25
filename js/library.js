@@ -146,31 +146,15 @@ function onFecc(fecc) {
     let zoomInterval = null;
     const zoomStepInterval = 100; // milliseconds between zoom steps
 
-    
     if (axis === 'zoom') {
       if (fecc.action === 'start') {
-        if (!zoomInterval) {
-          zoomInterval = setInterval(() => {
-            let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
-            zoom = Math.min(Math.max(zoom, cap.min), cap.max);
-            this.actionsSettings.zoom = zoom;
-            const constraints = { advanced: [{ zoom }] };
-            console.log(`Zoom updated to: ${zoom}`);
-            videoTrack.applyConstraints(constraints).catch(err => {
-              console.error(`Failed to apply zoom constraints:`, err);
-            });
-          }, zoomStepInterval);
-        }
-      }
-    
-      if (fecc.action === 'stop') {
-        if (zoomInterval) {
-          clearInterval(zoomInterval);
-          zoomInterval = null;
-        }
+        let zoom = this.actionsSettings.zoom + (direction === 'out' ? -zoomDelta : zoomDelta);
+        zoom = Math.min(Math.max(zoom, cap.min), cap.max);
+        this.actionsSettings.zoom = zoom;
+        console.log(`Zoom updated to: ${zoom}`);
+        constraints.advanced.push({ zoom });
       }
     }
-
 
     console.info('Applying constraints:', constraints);
     videoTrack.applyConstraints(constraints).catch(err => {
