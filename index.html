@@ -73,7 +73,16 @@
   
   <div class="hideAll" style="display: none;">
     
-<script>
+<script>    
+    function registerAndHideForm() {
+        reg.register(); // Call the original registration function
+        document.getElementById("regForm").style.display = "none"; // Hide the form
+    }
+
+    document.getElementById('closeMenu').addEventListener('click', function() {
+    document.getElementById('pullDown').checked = false;
+  });
+
     document.addEventListener('keydown', function(event) {
       // Check if Enter key is pressed
       if (event.key === 'Enter') {
@@ -84,15 +93,6 @@
         }
       }
     });
-    
-    function registerAndHideForm() {
-        reg.register(); // Call the original registration function
-        document.getElementById("regForm").style.display = "none"; // Hide the form
-    }
-
-    document.getElementById('closeMenu').addEventListener('click', function() {
-    document.getElementById('pullDown').checked = false;
-  });
     
 </script>
 
