@@ -74,6 +74,17 @@
   <div class="hideAll" style="display: none;">
     
 <script>
+    document.addEventListener('keydown', function(event) {
+      // Check if Enter key is pressed
+      if (event.key === 'Enter') {
+        // Optionally check if the button is visible/enabled
+        const registerButton = document.getElementById('register');
+        if (registerButton) {
+          registerAndHideForm();
+        }
+      }
+    });
+    
     function registerAndHideForm() {
         reg.register(); // Call the original registration function
         document.getElementById("regForm").style.display = "none"; // Hide the form
