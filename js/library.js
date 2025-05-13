@@ -257,20 +257,20 @@ unregister: function () {
   regStatus.innerText = "UNREGISTERED!!";
   regStatus.classList.add("flashing-red");
 
-  // Add Refresh Registration button right next to the status
-  let refreshBtn = document.getElementById("refresh_registration_btn");
+  // Create and show the "Refresh Registration" button when unregistered and flashing red
+  var refreshBtn = document.getElementById("refresh_registration_btn");
   if (!refreshBtn) {
     refreshBtn = document.createElement("button");
     refreshBtn.id = "refresh_registration_btn";
     refreshBtn.innerText = "Refresh Registration";
     refreshBtn.onclick = function () {
-      window.location.href = window.location.origin + window.location.pathname;
+      location.reload(); // Refresh the page
     };
-    refreshBtn.className = "refresh-btn";
-    regStatus.parentNode.insertBefore(refreshBtn, regStatus.nextSibling); // Insert next to status
+    document.body.appendChild(refreshBtn); // Add the button to the body or a specific container
   }
 
-  refreshBtn.style.display = "inline-block";
+  // Show the button if it exists
+  refreshBtn.style.display = "inline-block"; // Make sure it's visible
 },
 
   request_token: function () {
