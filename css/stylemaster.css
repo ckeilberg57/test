@@ -205,26 +205,22 @@ color:#FF0000;
 }
 
 #reg_status {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
+  display: inline-block;
+  margin-right: 10px;
   font-weight: bold;
-  color: green;
-  background-color: white; /* Optional: to make it stand out */
-  padding: 10px;
 }
 
-#refresh_registration_btn {
+#refresh_registration_btn.refresh-btn {
   background-color: #0eb3c7;
   color: white;
   border: none;
-  padding: 10px;
-  font-size: 16px;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
   cursor: pointer;
-  margin-left: 10px;
+  vertical-align: middle;
 }
 
-#refresh_registration_btn:hover {
+#refresh_registration_btn.refresh-btn:hover {
   background-color: #0a94a8;
 }
