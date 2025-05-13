@@ -12,9 +12,13 @@ body {
 .dropdownContainer {
   position: relative;
   display: inline-block;
-  margin-bottom: 20px;
   width: 100%;
   text-align: center;
+  margin-top: 20px;
+}
+
+#pullDown {
+  display: none;
 }
 
 label[for="pullDown"] {
@@ -24,19 +28,20 @@ label[for="pullDown"] {
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 6px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 #headerMenu {
+  display: none;
   background-color: #ffffff;
   padding: 20px;
   margin-top: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  display: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: left;
   width: 100%;
   box-sizing: border-box;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 #pullDown:checked + label + #headerMenu {
