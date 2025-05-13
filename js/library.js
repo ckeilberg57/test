@@ -204,53 +204,74 @@ var reg = {
   event_source: null,
   token_refresh: null,
 
-  register: function () {
-    var alias = document.getElementById("reg_alias").value;
-    var host = document.getElementById("reg_host").value;
-    this.node = host;
-    this.alias = alias;
-    if (this.request_token()) {
-      if (this.start_events()) {
-        var regunreg = document.getElementById("register");
-        regunreg.value = "Unregister";
-        regunreg.className = "red";
-        regunreg.onclick = reg.unregister.bind(this);
-        console.log("Registered " + this);
-  
-        var statusEl = document.getElementById("reg_status");
-        statusEl.innerText = "REGISTERED";
-        statusEl.classList.remove("flashing-red", "red");
-        statusEl.classList.add("green");
-  
-      } else {
-        this.release_token();
-      }
-    }
-  },
+register: function () {
+  var alias = document.getElementById("reg_alias").value;
+  var host = document.getElementById("reg_host").value;
+  this.node = host;
+  this.alias = alias;
+  if (this.request_token()) {
+    if (this.start_events()) {
+      var regunreg = document.getElementById("register");
+      regunreg.value = "Unregister";
+      regunreg.className = "red";
+      regunreg.onclick = reg.unregister.bind(this);
+      console.log("Registered " + this);
 
-  unregister: function () {
-    if (this.event_source) {
-      this.event_source.close();
-      this.event_source = null;
+      var statusEl = document.getElementById("reg_status");
+      statusEl.innerText = "REGISTERED";
+      statusEl.classList.remove("flashing-red", "red");
+      statusEl.classList.add("green");
+
+      // Hide the refresh registration button when registered
+      var refreshBtn = document.getElementById("refresh_registration_btn");
+      if (refreshBtn) {
+        refreshBtn.style.display = "none";
+      }
+
+    } else {
+      this.release_token();
     }
-  
-    if (this.token_refresh) {
-      clearInterval(this.token_refresh);
-      this.token_refresh = null;
-    }
-  
-    this.release_token();
-  
-    var regunreg = document.getElementById("register");
-    regunreg.value = "Register Endpoint";
-    regunreg.className = "green";
-    regunreg.onclick = reg.register.bind(this);
-  
-    // ⛔ Flashing red UNREGISTERED status
-    const regStatus = document.getElementById("reg_status");
-    regStatus.innerText = "UNREGISTERED!!";
-    regStatus.classList.add("flashing-red");
-  },
+  }
+},
+
+unregister: function () {
+  if (this.event_source) {
+    this.event_source.close();
+    this.event_source = null;
+  }
+
+  if (this.token_refresh) {
+    clearInterval(this.token_refresh);
+    this.token_refresh = null;
+  }
+
+  this.release_token();
+
+  var regunreg = document.getElementById("register");
+  regunreg.value = "Register Endpoint";
+  regunreg.className = "green";
+  regunreg.onclick = reg.register.bind(this);
+
+  // Flashing red UNREGISTERED status
+  const regStatus = document.getElementById("reg_status");
+  regStatus.innerText = "UNREGISTERED!!";
+  regStatus.classList.add("flashing-red");
+
+  // Create and show the "Refresh Registration" button when unregistered and flashing red
+  var refreshBtn = document.getElementById("refresh_registration_btn");
+  if (!refreshBtn) {
+    refreshBtn = document.createElement("button");
+    refreshBtn.id = "refresh_registration_btn";
+    refreshBtn.innerText = "Refresh Registration";
+    refreshBtn.onclick = function () {
+      location.reload(); // Refresh the page
+    };
+    document.body.appendChild(refreshBtn); // Add the button to the body or a specific container
+  }
+
+  // Show the button if it exists
+  refreshBtn.style.display = "inline-block"; // Make sure it's visible
+},
 
   request_token: function () {
     var username = document.getElementById("reg_username").value;
