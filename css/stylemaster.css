@@ -203,3 +203,16 @@ color:#FF0000;
 .flashing-red {
   animation: flashRed 1s infinite;
 }
+
+.reg-status {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.green {
+  color: green;
+}
+.red {
+  color: red;
+}
