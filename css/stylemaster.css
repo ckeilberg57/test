@@ -204,15 +204,13 @@ color:#FF0000;
   animation: flashRed 1s infinite;
 }
 
-.reg-status {
+#reg_status {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   text-align: center;
-  margin-top: 20px;
   font-weight: bold;
-}
-
-.green {
   color: green;
-}
-.red {
-  color: red;
+  background-color: white; /* Optional: to make it stand out */
+  padding: 10px;
 }
