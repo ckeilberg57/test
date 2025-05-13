@@ -264,6 +264,8 @@ unregister: function () {
     refreshBtn.id = "refresh_registration_btn";
     refreshBtn.innerText = "Refresh Registration";
     refreshBtn.onclick = function () {
+      localStorage.clear();
+      sessionStorage.clear();
       window.location.replace(window.location.href.split('?')[0]);
     };
     refreshBtn.className = "refresh-btn";
