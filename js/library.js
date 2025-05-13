@@ -257,21 +257,22 @@ unregister: function () {
   regStatus.innerText = "UNREGISTERED!!";
   regStatus.classList.add("flashing-red");
 
-  // Create and show the "Refresh Registration" button when unregistered and flashing red
-  var refreshBtn = document.getElementById("refresh_registration_btn");
+  // Add Refresh Registration button right next to the status
+  let refreshBtn = document.getElementById("refresh_registration_btn");
   if (!refreshBtn) {
     refreshBtn = document.createElement("button");
     refreshBtn.id = "refresh_registration_btn";
     refreshBtn.innerText = "Refresh Registration";
     refreshBtn.onclick = function () {
-      location.reload(); // Refresh the page
+      // Perform hard reload (bypasses cache)
+      location.reload(true);
     };
-    document.body.appendChild(refreshBtn); // Add the button to the body or a specific container
+    refreshBtn.className = "refresh-btn";
+    regStatus.parentNode.insertBefore(refreshBtn, regStatus.nextSibling); // Insert next to status
   }
 
-  // Show the button if it exists
-  refreshBtn.style.display = "inline-block"; // Make sure it's visible
-},
+  refreshBtn.style.display = "inline-block";
+}
 
   request_token: function () {
     var username = document.getElementById("reg_username").value;
