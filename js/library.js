@@ -216,6 +216,8 @@ var reg = {
         regunreg.className = "red";
         regunreg.onclick = reg.unregister.bind(this);
         console.log("Registered " + this);
+        document.getElementById("reg_status").innerText = "REGISTERED";
+        document.getElementById("reg_status").classList.remove("flashing-red");
       } else {
         this.release_token();
       }
@@ -227,19 +229,23 @@ var reg = {
       this.event_source.close();
       this.event_source = null;
     }
-    console.log("Unregister " + this);
-
+  
     if (this.token_refresh) {
       clearInterval(this.token_refresh);
       this.token_refresh = null;
     }
-
+  
     this.release_token();
-
+  
     var regunreg = document.getElementById("register");
     regunreg.value = "Register Endpoint";
     regunreg.className = "green";
     regunreg.onclick = reg.register.bind(this);
+  
+    // ⛔ Flashing red UNREGISTERED status
+    const regStatus = document.getElementById("reg_status");
+    regStatus.innerText = "UNREGISTERED!!";
+    regStatus.classList.add("flashing-red");
   },
 
   request_token: function () {
@@ -261,8 +267,10 @@ var reg = {
         (expires * 1000) / 2
       );
       return true;
-    } else if (response["status"] == 401) {
-      reg_error.innerHTML = "Current Status: UNREGISTERED!!";
+    } else 
+      if (response["status"] == 401 || response["status"] !=200) {
+        reg_error.innerHTML = "Current Status: UNREGISTERED !!";
+        reg_error.classList.add("flashing-red");
     } else if (response["status"] == 0) {
       reg_error.innerHTML =
         "Failed to register: " + JSON.stringify(response["data"]);
