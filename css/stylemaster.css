@@ -130,3 +130,57 @@ color:#FF0000;
     text-decoration: none;
     transition: background-color 0.3s, transform 0.3s;
 }
+
+.formBox {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  width: 400px;
+}
+
+.formTitle {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #0a2136;
+  font-weight: 600;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.clabel {
+  margin-bottom: 5px;
+  font-weight: 600;
+  font-size: 0.95em;
+  color: #333;
+}
+
+.cinput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.registerBtn {
+  background-color: #0eb3c7;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 1em;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.registerBtn:hover {
+  background-color: #0a96a5;
+}
