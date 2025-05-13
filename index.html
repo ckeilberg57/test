@@ -17,14 +17,16 @@
 <body>
 
 <!-- Toggle Checkbox -->
-<input type="checkbox" id="pullDown"/>
-<label for="pullDown">Select Devices ▼</label>
-
-<div id="headerMenu">
-  <p class="select"><label for="audioSource">Microphone: </label><select id="audioSource"></select></p>
-  <p class="select"><label for="audioOutput">Speakers: </label><select id="audioOutput"></select></p>
-  <p class="select"><label for="videoSource">Camera: </label><select id="videoSource"></select></p>
-  <button id="closeMenu" style="margin-top: 10px;">Close</button>
+<div class="dropdownContainer">
+  <input type="checkbox" id="pullDown" />
+  <label for="pullDown">Select Device Settings</label>
+  
+  <div id="headerMenu">
+    <p class="select"><label for="audioSource">Microphone: </label><select id="audioSource"></select></p>
+    <p class="select"><label for="audioOutput">Speakers: </label><select id="audioOutput"></select></p>
+    <p class="select"><label for="videoSource">Camera: </label><select id="videoSource"></select></p>
+    <button id="closeMenu" style="margin-top: 10px;">Close</button>
+  </div>
 </div>
     
   <!-- Video Stage -->
