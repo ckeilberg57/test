@@ -194,23 +194,40 @@ color:#FF0000;
   background-color: #0a96a5;
 }
 
-@keyframes flashRed {
-  0% { color: red; }
-  50% { color: white; }
-  100% { color: red; }
+#status_container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px; /* Change to left: 20px if you want it on the left */
+  background-color: #1a1a1a;
+  padding: 10px 15px;
+  border-radius: 8px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#reg_status {
+  color: white;
+  font-weight: bold;
 }
 
 .flashing-red {
   animation: flashRed 1s infinite;
+  color: red;
 }
 
-#reg_status {
-  display: inline-block;
-  margin-right: 10px;
-  font-weight: bold;
+@keyframes flashRed {
+  0% { color: red; }
+  50% { color: darkred; }
+  100% { color: red; }
 }
 
-#refresh_registration_btn.refresh-btn {
+.green {
+  color: #00c853;
+}
+
+#refresh_registration_btn {
   background-color: #0eb3c7;
   color: white;
   border: none;
@@ -218,9 +235,8 @@ color:#FF0000;
   font-size: 14px;
   border-radius: 4px;
   cursor: pointer;
-  vertical-align: middle;
 }
 
-#refresh_registration_btn.refresh-btn:hover {
+#refresh_registration_btn:hover {
   background-color: #0a94a8;
 }
