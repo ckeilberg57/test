@@ -9,39 +9,38 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
-.dropdownContainer {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  text-align: center;
-  margin-top: 20px;
-}
-
 #pullDown {
   display: none;
 }
 
 label[for="pullDown"] {
-  display: inline-block;
+  display: block;
   background-color: #0eb3c7;
   color: white;
   padding: 10px 20px;
   cursor: pointer;
-  border-radius: 6px;
-  margin-bottom: 5px;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  border-radius: 0 0 6px 6px;
 }
 
 #headerMenu {
-  display: none;
+  position: fixed;
+  top: 50px; /* just below the label */
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #ffffff;
   padding: 20px;
-  margin-top: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  text-align: left;
-  width: 100%;
-  box-sizing: border-box;
+  display: none;
+  width: 350px;
+  z-index: 999;
 }
 
 #pullDown:checked + label + #headerMenu {
