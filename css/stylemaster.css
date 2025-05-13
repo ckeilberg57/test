@@ -194,16 +194,12 @@ color:#FF0000;
   background-color: #0a96a5;
 }
 
-.flashing-alert {
-  color: red;
-  font-weight: bold;
-  font-size: 24px;
-  text-align: center;
-  animation: flash 1s infinite;
+@keyframes flashRed {
+  0% { color: red; }
+  50% { color: white; }
+  100% { color: red; }
 }
 
-@keyframes flash {
-  0%   { opacity: 1; }
-  50%  { opacity: 0; }
-  100% { opacity: 1; }
+.flashing-red {
+  animation: flashRed 1s infinite;
 }
