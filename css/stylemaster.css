@@ -214,3 +214,17 @@ color:#FF0000;
   background-color: white; /* Optional: to make it stand out */
   padding: 10px;
 }
+
+#refresh_registration_btn {
+  background-color: #0eb3c7;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#refresh_registration_btn:hover {
+  background-color: #0a94a8;
+}
