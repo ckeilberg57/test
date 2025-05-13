@@ -263,7 +263,9 @@ unregister: function () {
     refreshBtn = document.createElement("button");
     refreshBtn.id = "refresh_registration_btn";
     refreshBtn.innerText = "Refresh Registration";
-    refreshBtn.onclick = resetUI;
+    refreshBtn.onclick = function () {
+      window.location.href = window.location.origin + window.location.pathname;
+    };
     refreshBtn.className = "refresh-btn";
     regStatus.parentNode.insertBefore(refreshBtn, regStatus.nextSibling); // Insert next to status
   }
@@ -454,26 +456,5 @@ unregister: function () {
       console.log("Exception during get_request");
       return { status: xmlhttp.status, data: {} };
     }
-  },
-
-    function resetUI() {
-    // Clear input fields
-    document.getElementById("reg_alias").value = "";
-    document.getElementById("reg_host").value = "";
-  
-    // Reset the Register button
-    const regBtn = document.getElementById("register");
-    regBtn.value = "Register Endpoint";
-    regBtn.className = "green";
-    regBtn.onclick = reg.register.bind(reg);
-  
-    // Reset status
-    const statusEl = document.getElementById("reg_status");
-    statusEl.innerText = "";
-    statusEl.className = "";
-  
-    // Hide refresh button if it exists
-    const refreshBtn = document.getElementById("refresh_registration_btn");
-    if (refreshBtn) refreshBtn.remove();
   },
 };
