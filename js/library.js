@@ -264,8 +264,7 @@ unregister: function () {
     refreshBtn.id = "refresh_registration_btn";
     refreshBtn.innerText = "Refresh Registration";
     refreshBtn.onclick = function () {
-      // Perform hard reload (bypasses cache)
-      location.reload(true);
+      window.location.href = window.location.origin + window.location.pathname;
     };
     refreshBtn.className = "refresh-btn";
     regStatus.parentNode.insertBefore(refreshBtn, regStatus.nextSibling); // Insert next to status
