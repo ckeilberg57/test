@@ -272,7 +272,7 @@ unregister: function () {
   }
 
   refreshBtn.style.display = "inline-block";
-}
+},
 
   request_token: function () {
     var username = document.getElementById("reg_username").value;
