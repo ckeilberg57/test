@@ -216,8 +216,12 @@ var reg = {
         regunreg.className = "red";
         regunreg.onclick = reg.unregister.bind(this);
         console.log("Registered " + this);
-        document.getElementById("reg_status").innerText = "REGISTERED";
-        document.getElementById("reg_status").classList.remove("flashing-red");
+  
+        var statusEl = document.getElementById("reg_status");
+        statusEl.innerText = "REGISTERED";
+        statusEl.classList.remove("flashing-red", "red");
+        statusEl.classList.add("green");
+  
       } else {
         this.release_token();
       }
