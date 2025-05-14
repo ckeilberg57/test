@@ -546,5 +546,5 @@ unregister: function () {
   
   // Initial connection
   setupEventSource();
-
+  },
 };
