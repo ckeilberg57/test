@@ -236,34 +236,48 @@ start();
 
 </script>
 <script>
-    // === ADDED FOR IP CHANGE DETECTION ===
-  let currentIP = null;
-  
-  async function checkIPChangeAndReregister() {
-    try {
-      const response = await fetch("https://api.ipify.org?format=json");
-      const data = await response.json();
-      const newIP = data.ip;
-  
-      if (currentIP && currentIP !== newIP) {
-        console.log(`IP address changed from ${currentIP} to ${newIP}. Re-registering...`);
-        reg.unregister();
-        setTimeout(() => {
-          reg.register();
-        }, 1000); // Delay to allow cleanup
-      }
-  
-      currentIP = newIP;
-    } catch (error) {
-      console.error("Failed to check IP address:", error);
+let currentIP = null;
+
+async function getCurrentIP() {
+  try {
+    const response = await fetch("https://api.ipify.org?format=json");
+    const data = await response.json();
+    return data.ip;
+  } catch (error) {
+    console.error("Failed to fetch initial IP:", error);
+    return null;
+  }
+}
+
+async function checkIPChangeAndReregister() {
+  try {
+    const response = await fetch("https://api.ipify.org?format=json");
+    const data = await response.json();
+    const newIP = data.ip;
+
+    if (currentIP && currentIP !== newIP) {
+      console.log(`IP address changed from ${currentIP} to ${newIP}. Re-registering...`);
+      reg.unregister();
+      setTimeout(() => {
+        reg.register();
+      }, 1000);
     }
-  },
-  
-  // Check every 30 seconds
-  setInterval(checkIPChangeAndReregister, 30000);
-  // Run initially
+
+    currentIP = newIP;
+  } catch (error) {
+    console.error("Failed to check IP address:", error);
+  }
+}
+
+// Initialize IP, then start the loop
+getCurrentIP().then(ip => {
+  currentIP = ip;
+  console.log("Initial IP set to:", currentIP);
+
+  // Run first check and then every 30 seconds
   checkIPChangeAndReregister();
-  // === END IP CHANGE DETECTION ===
+  setInterval(checkIPChangeAndReregister, 30000);
+});
 </script>
 </body>
 </html>
