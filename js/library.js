@@ -487,5 +487,3 @@ unregister: function () {
   // Run initially
   checkIPChangeAndReregister();
   // === END IP CHANGE DETECTION ===
-
-};
