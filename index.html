@@ -235,6 +235,97 @@ videoSelect.onchange = start;
 start();
 
 </script>
+<script>
+    let eventSource = null;
+let originalIp = null;
+let currentToken = null;
+
+const conferenceAlias = 'meet_alice'; // <-- Replace with actual conference alias
+const nodeAddress = 'cklab-edgenc01.ck-collab-engtest.com'; // <-- Replace with actual node address
+
+async function getPublicIP() {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
+  } catch (err) {
+    console.error('Failed to fetch IP address:', err);
+    return null;
+  }
+}
+
+async function getToken() {
+  try {
+    // Fetch token by calling the request_token endpoint
+    const response = await fetch(`https://${nodeAddress}/api/client/v2/conferences/${conferenceAlias}/request_token`);
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch token');
+    }
+
+    const data = await response.json();
+    return data.token; // Assumes the response is { token: 'your_token' }
+  } catch (err) {
+    console.error('Failed to fetch token:', err);
+    return null;
+  }
+}
+
+async function setupEventSource() {
+  const ip = await getPublicIP();
+  if (!ip) return;
+
+  if (originalIp === null) {
+    originalIp = ip;
+  } else if (ip !== originalIp) {
+    console.log('IP has changed from', originalIp, 'to', ip);
+    originalIp = ip;
+    restartEventSource();
+    return;
+  }
+
+  // Dynamically fetch the token
+  currentToken = await getToken();
+  if (!currentToken) {
+    console.error('No token found, unable to set up EventSource');
+    return;
+  }
+
+  if (!eventSource || eventSource.readyState === EventSource.CLOSED) {
+    console.log('Creating new EventSource connection...');
+    const eventUrl = `https://${nodeAddress}/api/client/v2/conferences/${conferenceAlias}/events?token=${currentToken}`;
+    eventSource = new EventSource(eventUrl);
+
+    eventSource.onmessage = (event) => {
+      console.log('Received message:', event.data);
+    };
+
+    eventSource.onerror = (err) => {
+      console.warn('EventSource error:', err);
+      if (err.status === 401) {
+        // Handle token expiration (e.g., fetch new token and restart EventSource)
+        console.log('Token expired. Fetching new token...');
+        setupEventSource();  // Re-run to fetch a new token
+      }
+    };
+  }
+}
+
+function restartEventSource() {
+  if (eventSource) {
+    console.log('Closing existing EventSource...');
+    eventSource.close();
+  }
+  setupEventSource(); // Re-establish connection
+}
+
+// Check every 60 seconds
+setInterval(setupEventSource, 60000);
+
+// Initial connection
+setupEventSource();
+
+</script>
 
 </body>
 </html>
