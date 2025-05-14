@@ -456,7 +456,8 @@ unregister: function () {
       console.log("Exception during get_request");
       return { status: xmlhttp.status, data: {} };
     }
-  },
+  }
+};
 
     // === ADDED FOR IP CHANGE DETECTION ===
   let currentIP = null;
