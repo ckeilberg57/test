@@ -456,7 +456,7 @@ unregister: function () {
       console.log("Exception during get_request");
       return { status: xmlhttp.status, data: {} };
     }
-  },
+  };,
 
   let eventSource = null;
   let originalIp = null;
