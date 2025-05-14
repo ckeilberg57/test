@@ -60,84 +60,85 @@ label[for="pullDown"] {
 }
 
 .green {
-color:#198b16;
+  color: #198b16;
 }
 
 .red {
-color:#FF0000;
+  color: #FF0000;
 }
 
-      .regForm {
-          position: absolute;
-          top: 2in;
-          left: 50%;
-          transform: translateX(-50%);
-          text-align: center;
-          width: max-content;
-      }
-      
-      .clabel {
-          display: inline-block;
-          width: 170px;
-          text-align: left;
-          font-weight: bold;
-          padding-right: 5px;
-      }
-      
-      .cinput {
-          display: inline-block;
-      }
+.regForm {
+  position: absolute;
+  top: 2in;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: max-content;
+}
 
-        .ia {
-        display: inline-block;
-        float: left;
-        }
+.clabel {
+  display: inline-block;
+  width: 170px;
+  text-align: left;
+  font-weight: bold;
+  padding-right: 5px;
+}
 
-      .controls {
-          border-top: 30px solid #fff;
-          display: none; 
-      }
+.cinput {
+  display: inline-block;
+}
 
-      .controls ul {
-          list-style: none;
-          display: flex;
-          justify-content: center;
-          padding: 0;
-          margin: 0;
-          gap: 7.5px; 
-      }
-      .controls li {
-          align-items: center;
-          display: inline-block;
-          width: 5%;
-      }
+.ia {
+  display: inline-block;
+  float: left;
+}
 
-      .controls a {
-          width: 50%;
-          padding: 20px 15px;
-          font-size: 1.4em;
-          cursor: pointer;
-          background: #D6D6D6;
-          transition: background .3s, color .3s;
-          vertical-align: middle;
-      }
-      
-      .controls a:hover,
-      .controls a.active {
-          background: #0EBEC7;
-          color: #fff;
-      }
+.controls {
+  border-top: 30px solid #fff;
+  display: none; 
+}
+
+.controls ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  gap: 7.5px; 
+}
+
+.controls li {
+  align-items: center;
+  display: inline-block;
+  width: 5%;
+}
+
+.controls a {
+  width: 50%;
+  padding: 20px 15px;
+  font-size: 1.4em;
+  cursor: pointer;
+  background: #D6D6D6;
+  transition: background .3s, color .3s;
+  vertical-align: middle;
+}
+
+.controls a:hover,
+.controls a.active {
+  background: #0EBEC7;
+  color: #fff;
+}
 
 .webrtcbutton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #0eb3c7; 
-    border-radius: 50%;
-    color: #5244EE;
-    text-align: center;
-    text-decoration: none;
-    transition: background-color 0.3s, transform 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0eb3c7; 
+  border-radius: 50%;
+  color: #5244EE;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .formBox {
@@ -197,7 +198,7 @@ color:#FF0000;
 #status_container {
   position: fixed;
   bottom: 20px;
-  right: 20px; /* Change to left: 20px if you want it on the left */
+  right: 20px;
   background-color: #1a1a1a;
   padding: 10px 15px;
   border-radius: 8px;
@@ -239,4 +240,51 @@ color:#FF0000;
 
 #refresh_registration_btn:hover {
   background-color: #0a94a8;
+}
+
+/* === iPad-specific styles === */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait),
+       only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+
+  body {
+    flex-direction: column;
+    padding: 20px;
+    justify-content: flex-start;
+  }
+
+  .form, .formBox {
+    width: 90%;
+    max-width: 500px;
+  }
+
+  .regForm {
+    top: 1in;
+  }
+
+  #headerMenu {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .controls ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .controls li {
+    width: auto;
+    margin-bottom: 10px;
+  }
+
+  .controls a {
+    width: auto;
+    display: block;
+    text-align: center;
+  }
+
+  #status_container {
+    bottom: 10px;
+    left: 10px;
+    right: auto;
+  }
 }
