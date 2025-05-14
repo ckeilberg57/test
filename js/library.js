@@ -531,7 +531,7 @@ unregister: function () {
         }
       };
     }
-  }
+  },
   
   function restartEventSource() {
     if (eventSource) {
