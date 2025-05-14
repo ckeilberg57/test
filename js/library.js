@@ -479,7 +479,7 @@ unregister: function () {
     } catch (error) {
       console.error("Failed to check IP address:", error);
     }
-  }
+  },
   
   // Check every 30 seconds
   setInterval(checkIPChangeAndReregister, 30000);
