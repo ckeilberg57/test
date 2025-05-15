@@ -30,6 +30,10 @@
   <p class="select"><label for="videoSource">Camera: </label><select id="videoSource"></select></p>
   <button id="closeMenu" style="margin-top: 10px;">Close</button>
 </div>
+
+<div id="tokenTimerContainer">
+  <strong>Token Age:</strong> <span id="tokenTimer">0</span> seconds
+</div>
     
   <!-- Video Stage -->
   <div class="videoStage" align="center">
@@ -278,6 +282,32 @@ getCurrentIP().then(ip => {
   checkIPChangeAndReregister();
   setInterval(checkIPChangeAndReregister, 30000);
 });
+</script>
+<script>
+let timer = 0;
+let intervalId = null;
+
+// Override console.log to catch "200 OK"
+(function() {
+    const originalLog = console.log;
+    console.log = function(...args) {
+        if (args.some(arg => typeof arg === 'string' && arg.includes('200 OK'))) {
+            resetTimer();
+        }
+        originalLog.apply(console, args);
+    };
+})();
+
+// Start or reset the token timer
+function resetTimer() {
+    clearInterval(intervalId);
+    timer = 0;
+    document.getElementById('timerValue').textContent = timer;
+    intervalId = setInterval(() => {
+        timer++;
+        document.getElementById('timerValue').textContent = timer;
+    }, 1000);
+}
 </script>
 </body>
 </html>
