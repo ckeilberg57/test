@@ -304,7 +304,7 @@ function startTokenTimer() {
     const originalConsoleLog = console.log;
 
     console.log = function (...args) {
-        if (args.some(arg => typeof arg === 'string' && arg.includes('200 OK'))) {
+        if (args.some(arg => typeof arg === 'string' && arg.includes('response 200'))) {
             startTokenTimer(); // reset and restart the timer on token refresh
         }
         originalConsoleLog.apply(console, args);
