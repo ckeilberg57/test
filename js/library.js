@@ -285,7 +285,7 @@ unregister: function () {
       this.registration_uuid = response["data"]["result"]["registration_uuid"];
       var expires = response["data"]["result"]["expires"];
       if (expires === undefined) {
-        expires = 120;
+        expires = 60;
       }
       this.token_refresh = setInterval(
         this.refresh_token.bind(this),
