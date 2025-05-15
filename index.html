@@ -30,10 +30,6 @@
   <p class="select"><label for="videoSource">Camera: </label><select id="videoSource"></select></p>
   <button id="closeMenu" style="margin-top: 10px;">Close</button>
 </div>
-
-<div id="tokenTimer" style="font-size: 16px; color: green; margin: 10px;">
-    Token Age: <span id="timerValue">0</span> seconds
-</div>
     
   <!-- Video Stage -->
   <div class="videoStage" align="center">
@@ -282,34 +278,6 @@ getCurrentIP().then(ip => {
   checkIPChangeAndReregister();
   setInterval(checkIPChangeAndReregister, 30000);
 });
-</script>
-<script>
-let tokenTimer = 0;
-let tokenTimerInterval = null;
-
-function startTokenTimer() {
-    if (tokenTimerInterval) {
-        clearInterval(tokenTimerInterval);
-    }
-    tokenTimer = 0;
-    document.getElementById('tokenTimer').textContent = tokenTimer;
-    tokenTimerInterval = setInterval(() => {
-        tokenTimer++;
-        document.getElementById('tokenTimer').textContent = tokenTimer;
-    }, 1000);
-}
-
-// Hook into your existing logging mechanism to monitor for '200 OK'
-(function () {
-    const originalConsoleLog = console.log;
-
-    console.log = function (...args) {
-        if (args.some(arg => typeof arg === 'string' && arg.includes('200 OK'))) {
-            startTokenTimer(); // reset and restart the timer on token refresh
-        }
-        originalConsoleLog.apply(console, args);
-    };
-})();
 </script>
 </body>
 </html>
