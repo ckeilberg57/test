@@ -195,6 +195,19 @@ label[for="pullDown"] {
   background-color: #0a96a5;
 }
 
+#tokenTimerContainer {
+  position:fixed;
+  bottom: 20px;
+  right: 30px;
+  background-color: #1a1a1a;
+  padding: 10px 15px;
+  border-radius: 8px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 #status_container {
   position: fixed;
   bottom: 20px;
