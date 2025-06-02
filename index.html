@@ -31,13 +31,18 @@
   <button id="closeMenu" style="margin-top: 10px;">Close</button>
 </div>
 
-<div id="tokenTimerContainer">
+<div id="tokenTimerContainer" style="color: white;">
   <strong>Token Age:</strong> <span id="tokenTimer">0</span>
 </div>
     
   <!-- Video Stage -->
-  <div class="videoStage" align="center">
-    <video width="98%" id="video" playsinline="playsinline" poster="img/hospital.gif" class="mediastream" muted autoplay="autoplay"></video>
+  <!-- div class="videoStage" align="center">
+    <video width="98%" id="video" playsinline="playsinline" poster="img/hospital.gif" class="mediastream" muted autoplay="autoplay"></video -->
+  <div class="videoStage" align="center" id="videoContainer" style="display: none;">
+  <video width="98%" id="video" class="mediastream" muted autoplay loop playsinline poster="img/hospital.gif">
+    <source src="video/healthcareGraph.mp4" type="video/mp4">
+    <img src="img/hospital.gif" alt="Hospital fallback image">
+  </video>
   
           <footer id="controls" class="controls cf">
               <ul>
@@ -60,7 +65,7 @@
 
     <div class="formGroup">
       <label class="clabel" for="reg_alias">Alias</label>
-      <input class="cinput" type="text" id="reg_alias" value="carekiosk406@ck-collab-engtest.com" />
+      <input class="cinput" type="text" id="reg_alias" value="cklabipad1@ck-collab-engtest.com" />
     </div>
 
     <div class="formGroup">
@@ -75,7 +80,7 @@
 
     <div class="formGroup">
       <label class="clabel" for="reg_host">Host</label>
-      <input class="cinput" type="text" id="reg_host" value="cklab-edgenc01.ck-collab-engtest.com" />
+      <input class="cinput" type="text" id="reg_host" value="cklab-edges.ck-collab-engtest.com" />
     </div>
 
     <div class="formGroup buttonGroup">
@@ -106,6 +111,7 @@
     function registerAndHideForm() {
         reg.register(); // Call the original registration function
         document.getElementById("regForm").style.display = "none"; // Hide the form
+        document.getElementById("videoContainer").style.display = "block";l //Show video
     }
 
     document.getElementById('closeMenu').addEventListener('click', function() {
