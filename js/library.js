@@ -26,16 +26,18 @@ function doneSetup(videoURL, pin_status) {
 
 function connected(videoURL) {
   video.poster = "";
+  video.style.display = "block";
 
-  video.style.display = "block"; 
-  
+  const videoContainer = document.getElementById("videoContainer");
+  videoContainer.classList.add("video-right"); // Move video right
+
   if (typeof MediaStream !== "undefined" && videoURL instanceof MediaStream) {
     video.srcObject = videoURL;
   } else {
     video.src = videoURL;
   }
-  
-  document.getElementById("controls").style.display = "block"; // Show the footer
+
+  document.getElementById("controls").style.display = "block"; // Show footer
 }
 
 function feccHandler(signal) {
@@ -107,18 +109,15 @@ function endCall() {
   const video = document.querySelector('video#video.mediastream');
 
   if (video) {
-    // Stop and clear any existing stream
     if (video.srcObject) {
       video.srcObject.getTracks().forEach(track => track.stop());
       video.srcObject = null;
     }
 
-    // Remove all existing child sources
     while (video.firstChild) {
       video.removeChild(video.firstChild);
     }
 
-    // Create a new source element
     const source = document.createElement("source");
     source.src = "video/healthcareGraph.mp4";
     source.type = "video/mp4";
@@ -132,14 +131,13 @@ function endCall() {
 
   if (videoContainer) {
     videoContainer.style.display = "block";
+    videoContainer.classList.remove("video-right"); // Move video back to center
   }
 
-  // Allow call to end again in the future
   setTimeout(() => {
     callEnded = false;
-  }, 1000); // or reset this flag when call starts again
+  }, 1000);
 }
-
 
 try {
   const stream = navigator.mediaDevices.getUserMedia({
