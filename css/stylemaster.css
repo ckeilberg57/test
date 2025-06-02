@@ -300,3 +300,18 @@ label[for="pullDown"] {
     display: none !important;
   }
 }
+  #videoContainer {
+    transition: all 0.5s ease-in-out;
+    display: flex;
+    justify-content: center; /* Default center */
+    align-items: center;
+  }
+
+  #videoContainer.video-right {
+    justify-content: flex-end; /* Moves video to the right */
+  }
+
+  video.mediastream {
+    max-width: 100%;
+    height: auto;
+  }
