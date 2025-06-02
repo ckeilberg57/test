@@ -77,15 +77,69 @@ function initialise(
   rtc.onFECC = feccHandler;
   rtc.onApplicationMessage = handleApplicationMessage;
   rtc.makeCall(node, conference, name, bandwidth);
+  rtc.onDisconnect = function(reason) {
+  console.log("Disconnected from conference:", reason);
+  endCall();
+};
 }
 
+//function endCall() {
+  //console.log("User wants to end the call.");
+  //rtc.disconnectAll();
+  //video = document.querySelector('video#video.mediastream');
+  //video.style.display="none";
+  //document.getElementById("controls").style.display = "none"; 
+//}
+
+let callEnded = false;
+
 function endCall() {
-  console.log("User wants to end the call.");
-  rtc.disconnect();
-  video = document.querySelector('video#video.mediastream');
-  video.style.display="none";
-  document.getElementById("controls").style.display = "none"; 
+  if (callEnded) return;
+  callEnded = true;
+
+  console.log("Ending call...");
+  rtc.disconnectAll();
+
+  const controls = document.getElementById("controls");
+  if (controls) controls.style.display = "none";
+
+  const videoContainer = document.getElementById("videoContainer");
+  const video = document.querySelector('video#video.mediastream');
+
+  if (video) {
+    // Stop and clear any existing stream
+    if (video.srcObject) {
+      video.srcObject.getTracks().forEach(track => track.stop());
+      video.srcObject = null;
+    }
+
+    // Remove all existing child sources
+    while (video.firstChild) {
+      video.removeChild(video.firstChild);
+    }
+
+    // Create a new source element
+    const source = document.createElement("source");
+    source.src = "video/healthcareGraph.mp4";
+    source.type = "video/mp4";
+    video.appendChild(source);
+
+    video.load();
+    video.play().catch(err => console.warn("Autoplay blocked:", err));
+
+    video.style.display = "block";
+  }
+
+  if (videoContainer) {
+    videoContainer.style.display = "block";
+  }
+
+  // Allow call to end again in the future
+  setTimeout(() => {
+    callEnded = false;
+  }, 1000); // or reset this flag when call starts again
 }
+
 
 try {
   const stream = navigator.mediaDevices.getUserMedia({
@@ -119,7 +173,7 @@ function onFecc(fecc) {
     };
   }
 
-  // 🔧 Reduce pan/tilt step for finer control
+  //  Reduce pan/tilt step for finer control
   const panTiltDelta = 150000;
   const zoomDelta = 10
 
