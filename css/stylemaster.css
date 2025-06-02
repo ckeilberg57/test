@@ -295,4 +295,8 @@ label[for="pullDown"] {
     left: 10px;
     right: auto;
   }
+
+  .hidden {
+    display: none !important;
+  }
 }
