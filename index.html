@@ -35,16 +35,14 @@
   <strong>Token Age:</strong> <span id="tokenTimer">0</span>
 </div>
     
-  <div id="videoStageWrapper" style="display: flex; flex-direction: row; justify-content: center; align-itmes: center">
-      <div id="loopingVideoContainer" style="width: 30%; display: none;">
-          <video id="loopingVideo" width="100%" muted autoplay loop playsinline="img/hospital.gif">
-              <source src="video/healthcareGraph.mp4" type="video/mp4">
-              <img src="img/hospital.gif" alt="Hospital fallback image">
-          </video>
-      </div>  
-    
-  <div class="videoStage" align="center" id="videoContainer" style="width: 70%; display: none;">
-  <video width="98%" id="video" class="mediastream" muted autoplay loop playsinline></video>
+  <!-- Video Stage -->
+  <!-- div class="videoStage" align="center">
+    <video width="98%" id="video" playsinline="playsinline" poster="img/hospital.gif" class="mediastream" muted autoplay="autoplay"></video -->
+  <div class="videoStage" align="center" id="videoContainer" style="display: none;">
+  <video width="98%" id="video" class="mediastream" muted autoplay loop playsinline poster="img/hospital.gif">
+    <source src="video/healthcareGraph.mp4" type="video/mp4">
+    <img src="img/hospital.gif" alt="Hospital fallback image">
+  </video>
   
           <footer id="controls" class="controls cf">
               <ul>
